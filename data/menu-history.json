@@ -1,0 +1,28 @@
+{
+    "history": [
+        {
+            "date": "Today",
+            "isOpen": true,
+            "apiEndPoint": [
+                {
+                    "api": "api.hungthinhit.com/v1/phoenix/is/legend"
+                },
+                {
+                    "api": "api.hungthinhit.com/v1/phoenix/is/legend2"
+                },
+                {
+                    "api": "api.hungthinhit.com/v1/phoenix/is/legend-never-die"
+                }
+            ]
+        },
+        {
+            "date": "07101999",
+            "isOpen": false,
+            "apiEndPoint": [
+                {
+                    "api": "api.hungthinhit.com/v1/phoenix/is/legend"
+                }
+            ]
+        }
+    ]
+}
