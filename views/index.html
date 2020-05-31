@@ -20,6 +20,7 @@
       rel="stylesheet"
       href="../resources/custom/vendor/content-main/content-main.css"
     />
+    <link rel="stylesheet" href="../resources/custom/css/http-method.css">
   </head>
   <body>
     <div class="window">
@@ -68,31 +69,25 @@
                   />
                 </li>
               </ul>
-              <div class="tab-group" style="background-color: #fafafa;">
-                <div
-                  class="tab-item tab-item-fixed tab-menu-left"
-                  data-actionmenu="dashboard-history"
-                  onclick="showTab(event, 'dashboard-history')"
-                >
+              <div class="tab-group" style="background-color: #FAFAFA;">
+                <div class="tab-item tab-item-fixed tab-menu-left active" data-actionmenu="dashboard-history" onclick="showTab(event, 'dashboard-history')">
                   <span class="icon"></span>
                   History
                 </div>
-                <div
-                  class="tab-item tab-item-fixed tab-menu-left active"
-                  data-actionmenu="dashboard-collection"
-                  onclick="showTab(event, 'dashboard-collection')"
-                >
+                <div class="tab-item tab-item-fixed tab-menu-left" data-actionmenu="dashboard-collection" onclick="showTab(event, 'dashboard-collection')">
                   <span class="icon"></span>
                   Collection
                 </div>
               </div>
-              <div
-                id="dashboard-history"
-                class="tab-menu-left-content"
-                style="display: none;"
-              >
-                <h3>London</h3>
-                <p>London is the capital city of England.</p>
+              <div id="dashboard-history" class="tab-menu-left-content" style="display: none">
+                <div class="content-frame">
+                  <div class="frame-inner">
+                    <ul class="list-select list-editable">
+                      <li class="active history-api" draggable="false">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
               <div
@@ -103,13 +98,16 @@
                 <div class="content-frame">
                   <div class="frame-inner">
                     <ul class="list-select list-editable">
-                      <li class="active" draggable="false">
+                      <li class="collection-api" draggable="false"> ssss
                         <details>
                           <summary>Today</summary>
                           <ul>
-                            <li>
-                              API1
-                            </li>
+                            <li><span class="method-get">get</span> API1 </li>
+                            <li><span class="method-head">head</span> API1 </li>
+                            <li><span class="method-post">post</span> API1 </li>
+                            <li><span class="method-put">put</span> API1 </li>
+                            <li><span class="method-delete">delete</span> API1 </li>
+                            <li><span class="method-options">options</span> API1 </li>
                             <li>API2</li>
                           </ul>
                         </details>
