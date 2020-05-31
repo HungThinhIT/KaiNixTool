@@ -10,3 +10,14 @@
 .pane-main {
   overflow: hidden;
 }
+
+.content-frame {
+  margin: 0;
+  display: flex;
+  width: 100%;
+}
+
+.content-frame .frame-inner ul li details summary,
+.content-frame .frame-inner ul li > span {
+  padding: 5px 0 0 12px;
+}

@@ -13,14 +13,14 @@
     />
     <!-- <title>Kainix</title> -->
     <link rel="stylesheet" href="../resources/photon/css/photon-dev.css" />
-    <link rel="stylesheet" href="../resources/custom/css/dashboard.css" />
     <link rel="stylesheet" href="../resources/custom/css/src-frame-list.css" />
     <link rel="stylesheet" href="../resources/custom/vendor/tab/tab.css" />
     <link
       rel="stylesheet"
       href="../resources/custom/vendor/content-main/content-main.css"
     />
-    <link rel="stylesheet" href="../resources/custom/css/http-method.css">
+    <link rel="stylesheet" href="../resources/custom/css/dashboard.css" />
+    <link rel="stylesheet" href="../resources/custom/css/http-method.css" />
   </head>
   <body>
     <div class="window">
@@ -69,22 +69,33 @@
                   />
                 </li>
               </ul>
-              <div class="tab-group" style="background-color: #FAFAFA;">
-                <div class="tab-item tab-item-fixed tab-menu-left active" data-actionmenu="dashboard-history" onclick="showTab(event, 'dashboard-history')">
+              <div class="tab-group" style="background-color: #fafafa;">
+                <div
+                  class="tab-item tab-item-fixed tab-menu-left active"
+                  data-actionmenu="dashboard-history"
+                  onclick="showTab(event, 'dashboard-history')"
+                >
                   <span class="icon"></span>
                   History
                 </div>
-                <div class="tab-item tab-item-fixed tab-menu-left" data-actionmenu="dashboard-collection" onclick="showTab(event, 'dashboard-collection')">
+                <div
+                  class="tab-item tab-item-fixed tab-menu-left"
+                  data-actionmenu="dashboard-collection"
+                  onclick="showTab(event, 'dashboard-collection')"
+                >
                   <span class="icon"></span>
                   Collection
                 </div>
               </div>
-              <div id="dashboard-history" class="tab-menu-left-content" style="display: none">
+              <div
+                id="dashboard-history"
+                class="tab-menu-left-content"
+                style="display: none;"
+              >
                 <div class="content-frame">
                   <div class="frame-inner">
                     <ul class="list-select list-editable">
-                      <li class="active history-api" draggable="false">
-                      </li>
+                      <li class="active history-api" draggable="false"></li>
                     </ul>
                   </div>
                 </div>
@@ -98,17 +109,29 @@
                 <div class="content-frame">
                   <div class="frame-inner">
                     <ul class="list-select list-editable">
-                      <li class="collection-api" draggable="false"> ssss
+                      <li class="collection-api" draggable="false">
+                        <!-- ssss -->
                         <details>
                           <summary>Today</summary>
                           <ul>
-                            <li><span class="method-get">get</span> API1 </li>
-                            <li><span class="method-head">head</span> API1 </li>
-                            <li><span class="method-post">post</span> API1 </li>
-                            <li><span class="method-put">put</span> API1 </li>
-                            <li><span class="method-delete">delete</span> API1 </li>
-                            <li><span class="method-options">options</span> API1 </li>
-                            <li>API2</li>
+                            <li>
+                              <span class="method method-get">get</span><span class="method-link">API1</span>
+                            </li>
+                            <li>
+                              <span class="method method-head">head</span><span class="method-link">API1</span>
+                            </li>
+                            <li>
+                              <span class="method method-post">post</span><span class="method-link">API1</span>
+                            </li>
+                            <li>
+                              <span class="method method-put">put</span><span class="method-link">API1</span>
+                            </li>
+                            <li>
+                              <span class="method method-delete">delete</span><span class="method-link">api.hungthinhit.com/v1/phoenix/is/legend-never-die</span>
+                            </li>
+                            <li>
+                              <span class="method method-options">options</span><span class="method-link">API1</span>
+                            </li>
                           </ul>
                         </details>
                         <details>
@@ -130,15 +153,15 @@
 
           <div class="pane pane-main">
             <div class="tab-group tab-group-api">
-              <div class="tab-item tab-item-api">
+              <div class="tab-item">
                 <span class="icon icon-cancel icon-close-tab"></span>
                 Untitle Request
               </div>
-              <div class="tab-item tab-item-api active">
+              <div class="tab-item active">
                 <span class="icon icon-cancel icon-close-tab"></span>
                 Untitle Request
               </div>
-              <div class="tab-item tab-item-api">
+              <div class="tab-item">
                 <span class="icon icon-cancel icon-close-tab"></span>
                 Untitle Request
               </div>
