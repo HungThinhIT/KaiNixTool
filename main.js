@@ -1,19 +1,20 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+var pjson = require('./package.json');
 
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('views/index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -41,3 +42,9 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+app.setAboutPanelOptions({
+  applicationName: "KaiNix", 
+  applicationVersion: "Version",
+  version: pjson.version,
+  copyright: "Copyright © 2020 Kaiser & Phoenix",
+});

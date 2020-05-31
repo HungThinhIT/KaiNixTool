@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="X-Content-Security-Policy" content="style-src 'self' 'unsafe-inline';">
+    <!-- <title>Kainix</title> -->
+    <link rel="stylesheet" href="../resources/photon/css/photon-dev.css">
+    <link rel="stylesheet" href="../resources/custom/css/dashboard.css">
+    <link rel="stylesheet" href="../resources/custom/css/src-frame-list.css">
+  </head>
+  <body>
+    <div class="window">
+      <div class="toolbar-actions">
+        <div class="btn-group">
+          <button class="btn btn-default">
+            <span class="icon icon-home"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-folder"></span>
+          </button>
+          <button class="btn btn-default active">
+            <span class="icon icon-cloud"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-popup"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-shuffle"></span>
+          </button>
+        </div>
+    
+        <button class="btn btn-default">
+          <span class="icon icon-home icon-text"></span>
+          Filters
+        </button>
+    
+        <button class="btn btn-default btn-dropdown pull-right">
+          <span class="icon icon-megaphone"></span>
+        </button>
+      </div>
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+          <div class="pane pane-one-fourth sidebar">
+            <nav class="nav-group">
+              <ul class="list-group">
+                <li class="list-group-header" style="background-color: #FAFAFA;">
+                  <input class="form-control" type="text" placeholder="Filter">
+                </li>
+              </ul>
+              <div class="tab-group" style="background-color: #FAFAFA;">
+                <div class="tab-item tab-item-fixed tab-menu-left" data-actionmenu="dashboard-history" onclick="showTab(event, 'dashboard-history')">
+                  <span class="icon"></span>
+                  History
+                </div>
+                <div class="tab-item tab-item-fixed tab-menu-left active" data-actionmenu="dashboard-collection" onclick="showTab(event, 'dashboard-collection')">
+                  <span class="icon"></span>
+                  Collection
+                </div>
+              </div>
+              <div id="dashboard-history" class="tab-menu-left-content" style="display: none">
+                <h3>London</h3>
+                <p>London is the capital city of England.</p>
+              </div>
+              
+              <div id="dashboard-collection" class="tab-menu-left-content" style="display:none">
+                <div class="content-frame">
+                  <div class="frame-inner">
+                    <ul class="list-select list-editable">
+                      <li class="active" draggable="false">
+                        <details>
+                          <summary>Today</summary>
+                          <ul>
+                            <li>
+                              API1
+                            </li>
+                            <li>API2</li>
+                          </ul>
+                        </details>
+                        <details>
+                          <summary>07/10/1999</summary>
+                          <ul>
+                            <li>
+                              API1
+                            </li>
+                            <li>API2</li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+
+          <div class="pane">
+            <div class="tab-group tab-group-api">
+              <div class="tab-item tab-item-api">
+                <span class="icon icon-cancel icon-close-tab"></span>
+                Untitle Request
+              </div>
+              <div class="tab-item tab-item-api active">
+                <span class="icon icon-cancel icon-close-tab"></span>
+                Untitle Request
+              </div>
+              <div class="tab-item tab-item-api">
+                <span class="icon icon-cancel icon-close-tab"></span>
+                Untitle Request
+              </div>
+              <div class="tab-item tab-item-fixed">
+                <span class="icon icon-plus"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- You can also require other files to run in this process -->
+    <!-- <script src="./renderer.js"></script> -->
+    <script src="../resources/custom/js/tab.js"></script>
+    <script src="../resources/custom/js/preloadDashboard.js"></script>
+    <script src="../resources/custom/js/frame-list.js"></script>
+    <script>
+
+
+      function showTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-menu-left-content");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-menu-left");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      </script>
+  </body>
+</html>
