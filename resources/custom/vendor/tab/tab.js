@@ -12,7 +12,7 @@
       ) {
         var item = isTabItem.parents[isTabItem.parents.length - 1];
         group.dragStart = [event.pageX, event.pageY];
-        //item.classList.add("dragging");
+        item.classList.add("dragging");
         if (isDraggable(item)) {
           group.activeDraggingItem = item;
           group.classList.add("in-drag");
@@ -191,7 +191,7 @@
       var items = group.getElementsByClassName("tab-item");
       var itemsDraggable = getItemsDraggable(items);
       var newTab = document.createElement("div");
-      newTab.classList = "tab-item tab-item-api";
+      newTab.classList = "tab-item";
       if (opts.closeBtn) {
         var closeBtn = document.createElement("span");
         closeBtn.className = "icon icon-cancel icon-close-tab";

@@ -1,56 +1,59 @@
-.list-select .method-get{
-    text-transform: uppercase;
-    color: #08AC4C !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+details > ul {
+  font-size: 10px;
+  width: 100%;
 }
-.list-select .method-head{
-    text-transform: uppercase;
-    color: #818181 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+
+.content-frame .frame-inner ul li ul li {
+  padding-left: 10px;
+  display: flex;
+  /* padding-top: 3px;
+  padding-bottom: 3px; */
 }
-.list-select .method-put{
-    text-transform: uppercase;
-    color: #4860F1 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+
+.content-frame .frame-inner ul li ul li:hover,
+.content-frame .frame-inner ul li ul li:focus,
+.content-frame .frame-inner ul li ul li:hover .method,
+.content-frame .frame-inner ul li ul li:focus .method,
+.content-frame .frame-inner ul li ul li:hover .method-link,
+.content-frame .frame-inner ul li ul li:focus .method-link {
+  background-color: #f7f7f7;
 }
-.list-select .method-post{
-    text-transform: uppercase;
-    color: #FFBC03 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+
+.list-select .method {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  align-self: center;
+  width: 62px;
+  display: inline-block;
+  background-color: inherit;
 }
-.list-select .method-options{
-    text-transform: uppercase;
-    color: #818181 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+
+.list-select .method-get {
+  color: #08ac4c !important;
 }
-.list-select .method-delete{
-    text-transform: uppercase;
-    color: #F62424 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+.list-select .method-head {
+  color: #818181 !important;
 }
-.list-select .method-patch{
-    text-transform: uppercase;
-    color: #818181 !important;
-    font-size: 13px;
-    font-weight: bold;
-    padding-right: 9px !important;
-    text-align: center;
+.list-select .method-put {
+  color: #4860f1 !important;
+}
+.list-select .method-post {
+  color: #ffbc03 !important;
+}
+.list-select .method-options {
+  color: #818181 !important;
+}
+.list-select .method-delete {
+  color: #f62424 !important;
+}
+.list-select .method-patch {
+  color: #818181 !important;
+}
+
+.list-select .method-link {
+  padding-left: 5px !important;
+  padding-right: 3px !important;
+  width: calc(100% - 62px);
+  word-wrap: break-word !important;
 }
