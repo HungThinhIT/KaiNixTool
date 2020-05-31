@@ -30,7 +30,8 @@ Object.keys(data.history).forEach(key => {
     <summary>${data.history[key].date}</summary>
     <ul>
       ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
-      `<li>${data.history[key].apiEndPoint[keyOfApiEP].api}</li>\n`
+      `
+      <li><span class="method method-${data.history[key].apiEndPoint[keyOfApiEP].method}">${data.history[key].apiEndPoint[keyOfApiEP].method}</span><span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].api}</span></li>\n`
       )).join('')}
     </ul>
   </details>\n`);
