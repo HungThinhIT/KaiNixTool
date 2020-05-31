@@ -1,25 +1,12 @@
-.list-group-header .form-control{
-    cursor: auto;
-    border-radius: 5px;
+.list-group-header .form-control {
+  cursor: auto;
+  border-radius: 5px;
 }
 
-.tab-menu-left{
-    flex: auto !important;
+.tab-menu-left {
+  flex: auto !important;
 }
 
-.tab-group-api{
-    /* border-top: 1px solid #989698;
-    border-bottom: 1px solid #989698; */
-}
-
-.tab-group-api .tab-item-api{
-    text-align: left !important;
-    padding-left: 25px;
-    font-size: 12px !important;
-    flex: none !important;
-    padding: 3px 120px !important;
-    /* background-color: #b8b6b8;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b8b6b8), color-stop(100%, #b0aeb0));
-    background-image: -webkit-linear-gradient(top, #b8b6b8 0%, #b0aeb0 100%);
-    background-image: linear-gradient(to bottom, #b8b6b8 0%, #b0aeb0 100%); */
+.pane-main {
+  overflow: hidden;
 }
