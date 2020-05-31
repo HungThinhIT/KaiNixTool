@@ -7,6 +7,10 @@
   flex: auto !important;
 }
 
+.sidebar {
+  min-width: 185px;
+}
+
 .pane-main {
   overflow: hidden;
 }
