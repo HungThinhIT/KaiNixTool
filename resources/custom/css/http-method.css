@@ -1,0 +1,56 @@
+.list-select .method-get{
+    text-transform: uppercase;
+    color: #08AC4C !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-head{
+    text-transform: uppercase;
+    color: #818181 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-put{
+    text-transform: uppercase;
+    color: #4860F1 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-post{
+    text-transform: uppercase;
+    color: #FFBC03 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-options{
+    text-transform: uppercase;
+    color: #818181 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-delete{
+    text-transform: uppercase;
+    color: #F62424 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
+.list-select .method-patch{
+    text-transform: uppercase;
+    color: #818181 !important;
+    font-size: 13px;
+    font-weight: bold;
+    padding-right: 9px !important;
+    text-align: center;
+}
