@@ -22,6 +22,7 @@
   white-space: nowrap;
   padding-left: 25px;
   overflow: hidden;
+  border-right: 1px dashed #c3c3c3;
   /* padding: 7px 120px 7px 25px !important; */
   margin: 0;
   /* background-color: #b8b6b8;
@@ -30,9 +31,11 @@
       background-image: linear-gradient(to bottom, #b8b6b8 0%, #b0aeb0 100%); */
 }
 
-.tab-group-api .tab-item-fixed {
+.tab-group-api .tab-item-fixed,
+.tab-group .tab-item-fixed {
   flex: none;
   text-align: center;
+  overflow: hidden;
   border-radius: 0;
   padding-top: 7px;
   padding-left: 12px;
