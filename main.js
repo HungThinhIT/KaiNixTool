@@ -2,6 +2,7 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 var pjson = require("./package.json");
+const Store = require('electron-store');
 
 function createWindow() {
   // Create the browser window.
@@ -50,3 +51,23 @@ app.setAboutPanelOptions({
   version: pjson.version,
   copyright: "Copyright © 2020 Kaiser & Phoenix",
 });
+
+console.log("User Data path" + app.getPath('userData'));
+
+/*
+* SAMPLE ELECTRON-STORE
+*/
+// const store = new Store();
+
+// store.set('unicorn', '🦄');
+// console.log(store.get('unicorn'));
+// //=> '🦄'
+
+// // Use dot-notation to access nested properties
+// store.set('foo.bar', true);
+// console.log(store.get('foo'));
+// //=> {bar: true}
+
+// // store.delete('unicorn');
+// console.log(store.get('unicorn'));
+// //=> undefined
