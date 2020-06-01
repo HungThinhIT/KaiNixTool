@@ -1,6 +1,6 @@
 {
   "name": "KaiNix",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "This is an open source tool for testing REST API, power on Electronjs.",
   "main": "main.js",
   "scripts": {
