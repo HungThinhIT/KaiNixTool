@@ -1,5 +1,4 @@
-const fs = require('fs')
-const fileContents = fs.readFileSync('./data/menu-history.json', 'utf8')
+const ipcRenderer = require('electron').ipcRenderer;
 
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -14,33 +13,46 @@ const fileContents = fs.readFileSync('./data/menu-history.json', 'utf8')
 //   }
 // })
 
-//Load menu-history and parse all old data
-console.log("Hello.");
-var data;
-try {
-  data = JSON.parse(fileContents)
-  // console.log(data.history);
+/*
+ * GET HISTORY DATA FROM IPC Main
+ */
+const historyMenuApi = ipcRenderer.sendSync('menu-history-api');
 
-} catch (err) {
-  console.error(err)
+/*
+ * All function below.
+ */
+function setHistoryApiMenu(){
+  var historyMenuApiHtml = '';
+  var data = historyMenuApi;  
+  Object.keys(data.history).forEach(key => {    
+    historyMenuApiHtml = historyMenuApiHtml
+      .concat(
+        `<details ${data.history[key].isOpen == true ? 'open' : ''}>
+          <summary>${data.history[key].date}</summary>
+          <ul>
+            ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
+            `<li>
+              <span class="method method-${data.history[key].apiEndPoint[keyOfApiEP].method}">${data.history[key].apiEndPoint[keyOfApiEP].method}</span>
+              <span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].api}</span>
+            </li>\n`
+            )).join('')}
+          </ul>
+        </details>\n`
+      );    
+  });
+  document.querySelector('#dashboard-history > div > div > ul > li').innerHTML = historyMenuApiHtml;
 }
-var historyMenuHtml = '';
-Object.keys(data.history).forEach(key => {
-  historyMenuHtml = historyMenuHtml.concat(`<details ${data.history[key].isOpen == true ? 'open' : '' }>
-    <summary>${data.history[key].date}</summary>
-    <ul>
-      ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
-      `
-      <li><span class="method method-${data.history[key].apiEndPoint[keyOfApiEP].method}">${data.history[key].apiEndPoint[keyOfApiEP].method}</span><span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].api}</span></li>\n`
-      )).join('')}
-    </ul>
-  </details>\n`);
-});
-  console.log(historyMenuHtml);
+
+function setOldUserData(){
+  setHistoryApiMenu();
+  // setHistoryCollectionMenu(); //TODO: IN PROGRESS
+  // setRequestingApiContent(); //TODO: IN PROGRESS
+}
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  console.log(document);
-  document.querySelector('#dashboard-history > div > div > ul > li').innerHTML = historyMenuHtml;
-  
+  setOldUserData();
+  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET
+    // ipcRenderer.send('send-api', his)
+  })
 })
