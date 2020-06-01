@@ -115,22 +115,30 @@
                           <summary>Today</summary>
                           <ul>
                             <li>
-                              <span class="method method-get">get</span><span class="method-link">API1</span>
+                              <span class="method method-get">get</span
+                              ><span class="method-link">API1</span>
                             </li>
                             <li>
-                              <span class="method method-head">head</span><span class="method-link">API1</span>
+                              <span class="method method-head">head</span
+                              ><span class="method-link">API1</span>
                             </li>
                             <li>
-                              <span class="method method-post">post</span><span class="method-link">API1</span>
+                              <span class="method method-post">post</span
+                              ><span class="method-link">API1</span>
                             </li>
                             <li>
-                              <span class="method method-put">put</span><span class="method-link">API1</span>
+                              <span class="method method-put">put</span
+                              ><span class="method-link">API1</span>
                             </li>
                             <li>
-                              <span class="method method-delete">delete</span><span class="method-link">api.hungthinhit.com/v1/phoenix/is/legend-never-die</span>
+                              <span class="method method-delete">delete</span
+                              ><span class="method-link"
+                                >api.hungthinhit.com/v1/phoenix/is/legend-never-die</span
+                              >
                             </li>
                             <li>
-                              <span class="method method-options">options</span><span class="method-link">API1</span>
+                              <span class="method method-options">options</span
+                              ><span class="method-link">API1</span>
                             </li>
                           </ul>
                         </details>
@@ -174,11 +182,48 @@
             <div class="pane">
               <div class="content-main">
                 <div class="content-main-header">
-                  <div class="content-main-header-left"></div>
-                  <div class="content-main-header-right"></div>
+                  <div class="content-main-header-box">
+                    <div class="content-main-header-left">1</div>
+                    <div class="content-main-header-right">1</div>
+                  </div>
                   <div class="content-main-header-content">1</div>
                 </div>
-                <div class="content-main-request-fixed"></div>
+                <!-- content main request fixed : DONE -->
+                <div class="content-main-request-fixed">
+                  <form class="form-request">
+                    <div class="col-2 method-request">
+                      <select name="method" id="method">
+                        <option class="option-box" value="get">GET</option>
+                        <option class="option-box" value="post">POST</option>
+                        <option class="option-box" value="put">PUT</option>
+                        <option class="option-box" value="patch">PATCH</option>
+                        <option class="option-box" value="delete"
+                          >DELETE</option
+                        >
+                        <option class="option-box" value="options"
+                          >OPTIONS</option
+                        >
+                      </select>
+                    </div>
+                    <div class="col-8 path-request">
+                      <input
+                        type="text"
+                        placeholder="http://localhost"
+                        name="path"
+                      />
+                    </div>
+                    <div class="col-2 send-request">
+                      <input
+                        type="button"
+                        class="btn-send-request"
+                        name="submit"
+                        value="Send"
+                      />
+                    </div>
+                  </form>
+                  <div class="clear-fix"></div>
+                </div>
+                <!-- End:==:content main request fixed : DONE -->
                 <div class="pane">
                   <div class="content-main-child">
                     <div class="content-main-child-header"></div>
