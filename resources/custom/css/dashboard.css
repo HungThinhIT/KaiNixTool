@@ -1,3 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
 .list-group-header .form-control {
   cursor: auto;
   border-radius: 5px;
@@ -24,4 +32,16 @@
 .content-frame .frame-inner ul li details summary,
 .content-frame .frame-inner ul li > span {
   padding: 5px 0 0 12px;
+}
+
+.col-2 {
+  width: 16.66%;
+}
+
+.col-4 {
+  width: 33.33%;
+}
+
+.col-8 {
+  width: 66.66%;
 }
