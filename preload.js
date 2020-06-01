@@ -1,4 +1,5 @@
 const ipcRenderer = require('electron').ipcRenderer;
+const dateFormat = require('dateformat');
 
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -14,20 +15,20 @@ const ipcRenderer = require('electron').ipcRenderer;
 // })
 
 /*
- * GET HISTORY DATA FROM IPC Main
+ * Get history from user data
  */
-const historyMenuApi = ipcRenderer.sendSync('menu-history-api');
+  const historyMenuApi = ipcRenderer.sendSync('menu-history-api');
 
 /*
  * All function below.
  */
-function setHistoryApiMenu(){
+function setHistoryApiMenu(historyMenuApi){
   var historyMenuApiHtml = '';
   var data = historyMenuApi;  
-  Object.keys(data.history).forEach(key => {    
+  Object.keys(data.history).forEach(key => {
     historyMenuApiHtml = historyMenuApiHtml
       .concat(
-        `<details ${data.history[key].isOpen == true ? 'open' : ''}>
+        `<details class="category-history-api" data-historyApiDate="${data.history[key].date}" ${data.history[key].isOpen == true ? 'open' : ''}>
           <summary>${data.history[key].date}</summary>
           <ul>
             ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
@@ -43,16 +44,60 @@ function setHistoryApiMenu(){
   document.querySelector('#dashboard-history > div > div > ul > li').innerHTML = historyMenuApiHtml;
 }
 
-function setOldUserData(){
-  setHistoryApiMenu();
+function setHistoryCollectionMenu(){}
+function setRequestingApiContent(){}
+
+function setOldUserData(historyMenuApi){
+  setHistoryApiMenu(historyMenuApi);
   // setHistoryCollectionMenu(); //TODO: IN PROGRESS
   // setRequestingApiContent(); //TODO: IN PROGRESS
 }
 
+function SaveApiToHistory(api){
+
+}
+
+function saveStateHistoryApiMenuCategory(date, isOpen){
+  ipcRenderer.send('save-state-menu-history-api',( event, {date, isOpen}))
+}
 
 window.addEventListener('DOMContentLoaded', () => {
-  setOldUserData();
-  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET
-    // ipcRenderer.send('send-api', his)
+  setOldUserData(historyMenuApi);
+
+  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
+
+    const date = dateFormat(new Date(), "yyyy-mm-dd");
+    const idApi = dateFormat(new Date(), "yyyymmddHHMMssL");
+    const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L"); //2020-06-01 15:04:16:09 -> example
+    //const isOpen = '' //TODO: WAITING UI is finish.
+    //const api = ''//TODO: WAITING UI is finish.
+    //const method = ''//TODO: WAITING UI is finish.
+    console.log(timeRequest)
+    let api = {
+      date: date,
+      isOpen: true,
+      apiEndPoint: [
+        {
+          id: idApi,
+          timeRequest: timeRequest,
+          api: 'api.hungthinhit.com/v1/phoenix/is/legend',
+          method: 'get'
+        }
+      ]
+    }
+    ipcRenderer.send('send-api', (event, api))
+
+    ipcRenderer.on('excuted-api', (event, apiHistoryMenu) => {
+      setHistoryApiMenu(apiHistoryMenu);
+    })
+    
   })
+})  
+
+window.addEventListener("click",  (event) => {
+  var isChildCategory = hasParentClass(event.target, "category-history-api");
+  var categoryHistoryApiMenu = isChildCategory.parents[isChildCategory.parents.length - 1];
+  saveStateHistoryApiMenuCategory(categoryHistoryApiMenu.dataset.historyapidate, !categoryHistoryApiMenu.open)
 })
+
+

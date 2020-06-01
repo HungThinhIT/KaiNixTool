@@ -1,8 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain} = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 var pjson = require("./package.json");
 const Store = require('electron-store');
+const { sortByDate, mergeSameDateInHistoryApiMenu } = require('./controllers/core');
 
 function createWindow() {
   // Create the browser window.
@@ -49,7 +50,7 @@ app.setAboutPanelOptions({
   applicationName: "KaiNix",
   applicationVersion: "Version",
   version: pjson.version,
-  copyright: "Copyright © 2020 Kaiser & Phoenix",
+  copyright: "Copyright © 2020 Kaiser & Phoenix & SinJunior",
 });
 
 console.log("User Data path" + app.getPath('userData'));
@@ -59,98 +60,47 @@ console.log("User Data path" + app.getPath('userData'));
 */
 const store = new Store();
 
-async function restoreHistoryApiMenu(){
+async function getHistoryApiMenu(){
     const hisApiMenu = await store.get('api-history-menu')
+    await hisApiMenu.history.sort(sortByDate)
     return hisApiMenu
-    
 }
 
 /*
  * LISTENING ALL REQUEST FROM IPC RENDERER
  */
 ipcMain.on('menu-history-api', async(event) => {
-  const hisApiMenu = await restoreHistoryApiMenu()
+  const hisApiMenu = await getHistoryApiMenu()
   event.returnValue = await hisApiMenu
 });
 
-// TODO: IN PROGESS
-
-// ipcMain.on('send-api', async(event, arg) => {
-//   console.log("SEND_API_IN_MAIN_IS_RUNNING");
-//   console.log(arg);
+ipcMain.on('send-api', async(event, api) => {
+  let historyApiMenu = await getHistoryApiMenu()
+  //Compare date in new request
+  let mergeResult = await mergeSameDateInHistoryApiMenu(api, historyApiMenu)
   
-//   event.sender.send('rec-api-history',' OK OK OK')
-// })
+  if(mergeResult[0]){
+    await store.set('api-history-menu.history', mergeResult[1].history)    
+    event.sender.send('excuted-api', mergeResult[1])
+  }
+  else{
+    await historyApiMenu.history.push(api)
+    await historyApiMenu.history.sort(sortByDate)
+    await store.set('api-history-menu.history', historyApiMenu.history)
+    event.sender.send('excuted-api', historyApiMenu)
+  }
+})
 
-// let historyMenu = {
-//   history: [
-//     date
-//     isOpen,
-//     {
-//       apiEndPoint : [
-//         api,
-//         method
-//       ]
-//     },
-      
-    
-//   ]
-// }
-
-// let historyMenu = {
-//   history: [
-//     {
-//       date: 'Today',
-//       isOpen: true,
-//       apiEndPoint: [
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-//           method: 'get'
-//         },
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend2',
-//           method: 'post'
-//         },
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend-never-die',
-//           method: 'put'
-//         }
-//       ]
-//     },
-//     {
-//       date: '07101999',
-//       isOpen: false,
-//       apiEndPoint: [
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-//           method: 'delete'
-//         }
-//       ]
-//     }
-//   ]
-// }
-// console.log(historyMenu.history);
-
-// // historyMenu.history.date = 'Today';
-// // historyMenu.history.push({date : "Today", "isOpen": false, apiEndPoint: [ api = 'apineee', method = 'get']});
-
-// // store.set('api-history-menu',historyMenu);
-// // store.set('history[].isOpen',true);
-
-// // store.set('unicorn', '🦄');
-// // console.log(store.get('unicorn'));
-// // //=> '🦄'
-
-// // // Use dot-notation to access nested properties
-// // store.set('foo.bar', true);
-// obbjhs = store.get('api-history-menu.history');
-// console.log("-=-=");
-
-// Object.keys(obbjhs).forEach(key => {
-//   console.log(obbjhs[key].date)
-//   });
-// // //=> {bar: true}
-
-// // store.delete('unicorn');
-// console.log(store.get('unicorn'));
-// //=> undefined
+// TODO: IN PROGESS
+/*
+ * Save state open/close of history api menu bar
+ */
+ipcMain.on('save-state-menu-history-api', async(event, {date, isOpen}) => {  
+  let historyApiMenu = await getHistoryApiMenu()  
+  Object.keys(historyApiMenu.history).forEach(key => {    
+    if(historyApiMenu.history[key].date.localeCompare(date) == 0){
+      historyApiMenu.history[key].isOpen = isOpen
+    }
+  })
+  store.set('api-history-menu.history', historyApiMenu.history)
+})

@@ -1,32 +1,126 @@
 {
-    "history": [
-        {
-            "date": "Today",
-            "isOpen": true,
-            "apiEndPoint": [
-                {
-                    "api": "api.hungthinhit.com/v1/phoenix/is/legend",
-                    "method": "get"
-                },
-                {
-                    "api": "api.hungthinhit.com/v1/phoenix/is/legend2",
-                    "method": "post"
-                },
-                {
-                    "api": "api.hungthinhit.com/v1/phoenix/is/legend-never-die",
-                    "method": "put"
-                }
-            ]
-        },
-        {
-            "date": "07101999",
-            "isOpen": false,
-            "apiEndPoint": [
-                {
-                    "api": "api.hungthinhit.com/v1/phoenix/is/legend",
-                    "method": "delete"
-                }
-            ]
-        }
-    ]
+	"api-history-menu": {
+		"history": [
+			{
+				"date": "2020-06-01",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060120112622",
+						"timeRequest": "2020-06-01 20:11:26:22",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060120112381",
+						"timeRequest": "2020-06-01 20:11:23:81",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060118255482",
+						"timeRequest": "2020-06-01 18:25:54:82",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060118255249",
+						"timeRequest": "2020-06-01 18:25:52:49",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060118255180",
+						"timeRequest": "2020-06-01 18:25:51:80",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060118255081",
+						"timeRequest": "2020-06-01 18:25:50:81",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060118254949",
+						"timeRequest": "2020-06-01 18:25:49:49",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					}
+				]
+			},
+			{
+				"date": "2020-05-01",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060116201976",
+						"timeRequest": "2020-06-01 16:20:19:76",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					}
+				]
+			},
+			{
+				"date": "2020-04-23",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060116004392",
+						"timeRequest": "2020-06-01 16:00:43:92",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					}
+				]
+			},
+			{
+				"date": "2020-03-21",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060116004392",
+						"timeRequest": "2020-06-01 16:00:43:92",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "delete"
+					}
+				]
+			},
+			{
+				"date": "2020-02-01",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060115541341",
+						"timeRequest": "2020-06-01 15:54:13:41",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					}
+				]
+			},
+			{
+				"date": "1999-07-10",
+				"isOpen": false,
+				"apiEndPoint": [
+					{
+						"id": "2020060116004392",
+						"timeRequest": "2020-06-01 16:00:43:92",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend",
+						"method": "get"
+					},
+					{
+						"id": "2020060116004392",
+						"timeRequest": "2020-06-01 16:00:43:92",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend2",
+						"method": "post"
+					},
+					{
+						"id": "2020060116004392",
+						"timeRequest": "2020-06-01 16:00:43:92",
+						"api": "api.hungthinhit.com/v1/phoenix/is/legend-never-die",
+						"method": "put"
+					}
+				]
+			}
+		]
+	}
 }
