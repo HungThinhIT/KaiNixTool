@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 var pjson = require("./package.json");
 const Store = require('electron-store');
-const { sortByDate, mergeSameDateInHistoryApiMenu } = require('./controllers/core');
+const fs = require('fs');
 
 function createWindow() {
   // Create the browser window.
@@ -60,47 +60,12 @@ console.log("User Data path" + app.getPath('userData'));
 */
 const store = new Store();
 
-async function getHistoryApiMenu(){
-    const hisApiMenu = await store.get('api-history-menu')
-    await hisApiMenu.history.sort(sortByDate)
-    return hisApiMenu
-}
+global.share = { ipcMain, store};
+
+if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)) 
+  store.set('api-history-menu.history',[]);
 
 /*
- * LISTENING ALL REQUEST FROM IPC RENDERER
+ * LOGIC Files
  */
-ipcMain.on('menu-history-api', async(event) => {
-  const hisApiMenu = await getHistoryApiMenu()
-  event.returnValue = await hisApiMenu
-});
-
-ipcMain.on('send-api', async(event, api) => {
-  let historyApiMenu = await getHistoryApiMenu()
-  //Compare date in new request
-  let mergeResult = await mergeSameDateInHistoryApiMenu(api, historyApiMenu)
-  
-  if(mergeResult[0]){
-    await store.set('api-history-menu.history', mergeResult[1].history)    
-    event.sender.send('excuted-api', mergeResult[1])
-  }
-  else{
-    await historyApiMenu.history.push(api)
-    await historyApiMenu.history.sort(sortByDate)
-    await store.set('api-history-menu.history', historyApiMenu.history)
-    event.sender.send('excuted-api', historyApiMenu)
-  }
-})
-
-// TODO: IN PROGESS
-/*
- * Save state open/close of history api menu bar
- */
-ipcMain.on('save-state-menu-history-api', async(event, {date, isOpen}) => {  
-  let historyApiMenu = await getHistoryApiMenu()  
-  Object.keys(historyApiMenu.history).forEach(key => {    
-    if(historyApiMenu.history[key].date.localeCompare(date) == 0){
-      historyApiMenu.history[key].isOpen = isOpen
-    }
-  })
-  store.set('api-history-menu.history', historyApiMenu.history)
-})
+require("./controllers/menu");
