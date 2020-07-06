@@ -15,9 +15,11 @@ const dateFormat = require('dateformat');
 // })
 
 /*
- * Get history from user data
+ * IPC_RENDERER Call here
  */
   const historyMenuApi = ipcRenderer.sendSync('menu-history-api');
+
+
 
 /*
  * All function below.
@@ -32,7 +34,7 @@ function setHistoryApiMenu(historyMenuApi){
           <summary>${data.history[key].date}</summary>
           <ul>
             ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
-            `<li>
+            `<li data-api-id="${data.history[key].apiEndPoint[keyOfApiEP].id}">
               <span class="method method-${data.history[key].apiEndPoint[keyOfApiEP].method}">${data.history[key].apiEndPoint[keyOfApiEP].method}</span>
               <span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].api}</span>
             </li>\n`
@@ -48,7 +50,9 @@ function setHistoryCollectionMenu(){}
 function setRequestingApiContent(){}
 
 function setOldUserData(historyMenuApi){
-  setHistoryApiMenu(historyMenuApi);
+  if(historyMenuApi.history.length > 0){
+    setHistoryApiMenu(historyMenuApi);
+  }
   // setHistoryCollectionMenu(); //TODO: IN PROGRESS
   // setRequestingApiContent(); //TODO: IN PROGRESS
 }
@@ -61,9 +65,15 @@ function saveStateHistoryApiMenuCategory(date, isOpen){
   ipcRenderer.send('save-state-menu-history-api',( event, {date, isOpen}))
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  setOldUserData(historyMenuApi);
 
+/*
+ * DOM CONTENT_LOADED
+*/
+window.addEventListener('DOMContentLoaded', () => {
+  //Parse old data;
+  setOldUserData(historyMenuApi);    
+
+  // setOldUserData(historyMenuApi);
   document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
 
     const date = dateFormat(new Date(), "yyyy-mm-dd");
