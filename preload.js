@@ -15,9 +15,77 @@ const dateFormat = require('dateformat');
 // })
 
 /*
- * IPC_RENDERER Call here
+ * IPC_RENDERER ON SEND HERE
  */
-  const historyMenuApi = ipcRenderer.sendSync('menu-history-api');
+const historyMenuApi = ipcRenderer.sendSync('get-history-api-menu');
+
+/*
+ * IPC_RENDERER LISTENER HERE
+ */
+ipcRenderer.on('parse-executed-api-to-history-menu', (event, apiHistoryMenu) => {
+  setHistoryApiMenu(apiHistoryMenu);
+})
+
+
+/*
+ * DOM CONTENT_LOADED
+*/
+window.addEventListener('DOMContentLoaded', () => {
+  //Parse old data;
+  setOldUserData(historyMenuApi);    
+
+  // setOldUserData(historyMenuApi);
+  
+  
+  /*
+  |-----------------------------------------------
+  | Request the Api
+  |-----------------------------------------------
+  |
+  | Collect all data via DOM and execute the api 
+  | All data will forward to request.js for 
+  | handle and return result.
+  |
+  |
+  */
+  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
+
+    const date = dateFormat(new Date(), "yyyy-mm-dd");
+    const idApi = dateFormat(new Date(), "yyyymmddHHMMssL");
+    const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L"); //2020-06-01 15:04:16:09 -> example
+    //const isOpen = '' //TODO: WAITING UI is finish.
+    //const api = ''//TODO: WAITING UI is finish.
+    //const method = ''//TODO: WAITING UI is finish.
+    console.log(timeRequest)
+    let api = {
+      date: date,
+      isOpen: true,
+      apiEndPoint: [
+        {
+          id: idApi,
+          timeRequest: timeRequest,
+          api: 'api.hungthinhit.com/v1/phoenix/is/legend',
+          method: 'get'
+        }
+      ]
+    }
+    //
+    const dataRequest  = ipcRenderer.sendSync('prepare-api-request', (event, api.apiEndPoint))
+    console.log(dataRequest);
+    ipcRenderer.send('set-executed-api-to-local-store', (event, api))
+    
+
+    // ipcRenderer.on
+    
+  })
+})  
+
+//Check State of Category Menu (Open or Close)
+window.addEventListener("click",  (event) => {
+  var isChildCategory = hasParentClass(event.target, "category-history-api");
+  var categoryHistoryApiMenu = isChildCategory.parents[isChildCategory.parents.length - 1];
+  saveStateHistoryApiMenuCategory(categoryHistoryApiMenu.dataset.historyapidate, !categoryHistoryApiMenu.open)
+})
 
 
 
@@ -62,52 +130,6 @@ function SaveApiToHistory(api){
 }
 
 function saveStateHistoryApiMenuCategory(date, isOpen){
-  ipcRenderer.send('save-state-menu-history-api',( event, {date, isOpen}))
+  ipcRenderer.send('save-state-category-history-api',( event, {date, isOpen}))
 }
-
-
-/*
- * DOM CONTENT_LOADED
-*/
-window.addEventListener('DOMContentLoaded', () => {
-  //Parse old data;
-  setOldUserData(historyMenuApi);    
-
-  // setOldUserData(historyMenuApi);
-  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
-
-    const date = dateFormat(new Date(), "yyyy-mm-dd");
-    const idApi = dateFormat(new Date(), "yyyymmddHHMMssL");
-    const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L"); //2020-06-01 15:04:16:09 -> example
-    //const isOpen = '' //TODO: WAITING UI is finish.
-    //const api = ''//TODO: WAITING UI is finish.
-    //const method = ''//TODO: WAITING UI is finish.
-    console.log(timeRequest)
-    let api = {
-      date: date,
-      isOpen: true,
-      apiEndPoint: [
-        {
-          id: idApi,
-          timeRequest: timeRequest,
-          api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-          method: 'get'
-        }
-      ]
-    }
-    ipcRenderer.send('send-api', (event, api))
-
-    ipcRenderer.on('excuted-api', (event, apiHistoryMenu) => {
-      setHistoryApiMenu(apiHistoryMenu);
-    })
-    
-  })
-})  
-
-window.addEventListener("click",  (event) => {
-  var isChildCategory = hasParentClass(event.target, "category-history-api");
-  var categoryHistoryApiMenu = isChildCategory.parents[isChildCategory.parents.length - 1];
-  saveStateHistoryApiMenuCategory(categoryHistoryApiMenu.dataset.historyapidate, !categoryHistoryApiMenu.open)
-})
-
 

@@ -68,4 +68,5 @@ if (!fs.existsSync(`${app.getPath('userData')}\\config.json`))
 /*
  * LOGIC Files
  */
+require("./controllers/request");
 require("./controllers/menu");
