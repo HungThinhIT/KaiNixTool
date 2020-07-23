@@ -45,3 +45,39 @@
 .col-8 {
   width: 66.66%;
 }
+
+.col-12 {
+  width: 100%;
+}
+
+.col-3 {
+  width: 25%;
+}
+
+.col-9 {
+  width: 75%;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center!important;
+}
+
+.justify-content-right {
+  justify-content: flex-end!important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.align-content-center {
+  align-content: center;
+}
