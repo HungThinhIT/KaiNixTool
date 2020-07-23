@@ -123,7 +123,6 @@
     }
   });
   window.addEventListener("click", function (event) {
-    console.log("click tab");
     var isTabGroup = hasParentClass(event.target, "tab-group");
     var group = isTabGroup.parents[isTabGroup.parents.length - 1];
     if (isTabGroup.success) {

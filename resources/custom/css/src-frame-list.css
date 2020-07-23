@@ -17,12 +17,13 @@
 .content-frame {
   margin: 10px;
   width: calc(100% - 20px);
-  min-height: 150px;
+  min-height: 250px;
   height: auto;
   position: relative;
 }
 .content-frame .pane {
   flex: 1;
+  overflow-y: hidden!important;
   border-right: 1px solid #c7c7c7;
   border-left: none;
 }

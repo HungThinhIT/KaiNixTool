@@ -21,6 +21,7 @@
     />
     <link rel="stylesheet" href="../resources/custom/css/dashboard.css" />
     <link rel="stylesheet" href="../resources/custom/css/http-method.css" />
+    <link rel="stylesheet" href="../resources/custom/css/content-main-child.css">
   </head>
   <body>
     <div class="window">
@@ -161,11 +162,11 @@
 
           <div class="pane pane-main">
             <div class="tab-group tab-group-api">
-              <div class="tab-item">
+              <div class="tab-item active">
                 <span class="icon icon-cancel icon-close-tab"></span>
                 Untitle Request
               </div>
-              <div class="tab-item active">
+              <div class="tab-item">
                 <span class="icon icon-cancel icon-close-tab"></span>
                 Untitle Request
               </div>
@@ -183,10 +184,10 @@
               <div class="content-main">
                 <div class="content-main-header">
                   <div class="content-main-header-box">
-                    <div class="content-main-header-left">1</div>
-                    <div class="content-main-header-right">1</div>
+                    <div class="content-main-header-left">Request name</div>
+                    <div class="content-main-header-right"></div>
                   </div>
-                  <div class="content-main-header-content">1</div>
+                  <div class="content-main-header-content"></div>
                 </div>
                 <!-- content main request fixed : DONE -->
                 <div class="content-main-request-fixed">
@@ -207,17 +208,20 @@
                     </div>
                     <div class="col-8 path-request">
                       <input
+                        id="path"
+                        required="required"
                         type="text"
                         placeholder="http://localhost"
                         name="path"
                       />
                     </div>
+                    <div class="form-content"></div>
                     <div class="col-2 send-request">
                       <input
                         type="button"
                         class="btn-send-request"
                         name="submit"
-                        value="Send"
+                        value="Send" onclick="allData()"
                       />
                     </div>
                   </form>
@@ -226,9 +230,197 @@
                 <!-- End:==:content main request fixed : DONE -->
                 <div class="pane">
                   <div class="content-main-child">
-                    <div class="content-main-child-header"></div>
-                    <div class="content-main-child-body"></div>
+
+
+                    <div class="material-tabs">
+                      <div class="tabbed-section__selector">
+                        <a class="tabbed-section__selector-tab-1 active" href="#">Params</a>
+                        <a class="tabbed-section__selector-tab-2" href="#">Authorization</a>
+                        <a class="tabbed-section__selector-tab-3" href="#">Headers</a>
+                         <a class="tabbed-section__selector-tab-4" href="#">Body</a>
+                        <a class="tabbed-section__selector-tab-5" href="#">Pre-scripts</a>
+                      </div>
+
+
+                      <div class="tabbed tabbed-section-1 visible">
+                        <div class="content-item-params-header">Query Params</div>
+                        <table class="table-params" id="table-params">
+                          <thead>
+                            <tr>
+                              <th class="thead-check"></th>
+                              <th class="thead-key">Key</th>
+                              <th class="thead-value">Value</th>
+                              <th class="thead-description">Description</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbody-params">
+                            <tr>
+                              <td class="params-check text-right">
+                                <input type="checkbox" onkeydown="firstCheck(this)" onchange="changeValue()" class="input-params">
+                              </td>
+                              <td class="params-key">
+                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                              </td>
+                              <td class="params-value">
+                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                              </td>
+                              <td class="params-description">
+                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                              </td>
+                            </tr>
+                            <tr id="last-row-params">
+                              <td class="params-check text-right">
+                                <input type="checkbox" onchange="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                              </td>
+                              <td class="params-key">
+                                <input type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                              </td>
+                              <td class="params-value">
+                                <input type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                              </td>
+                              <td class="params-description">
+                                <input type="text" onkeyup="changeValue()" class="input-params">
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-2 hidden">
+                        <div class="col-12 d-flex authorization-tabbed">
+                          <div class="col-3 text-center authorization-tabbed-left">
+                            <select name="authorize-type" id="authorize-type" onchange="setChangeType()">
+                              <option value="none">None</option>
+                              <option value="oauth-2">OAuth 2</option>
+                            </select>
+                          </div>
+                          <div class="col-9 authorization-tabbed-right" id="authorization-content-right">
+                            
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-3 hidden">
+                        <div class="content-item-params-header">
+                          Headers
+                        </div>
+                        <table class="table-headers" id="table-headers">
+                          <thead>
+                            <tr>
+                              <th class="thead-check"></th>
+                              <th class="thead-key">Key</th>
+                              <th class="thead-value">Value</th>
+                              <th class="thead-description">Description</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbody-headers">
+                            <tr>
+                              <td class="headers-check text-right">
+                                <input type="checkbox" class="input-params">
+                              </td>
+                              <td class="headers-key">
+                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                              </td>
+                              <td class="headers-value">
+                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                              </td>
+                              <td class="headers-description">
+                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                              </td>
+                            </tr>
+                            <tr id="last-row-headers">
+                              <td class="headers-check text-right">
+                                <input type="checkbox" onkeydown="changesHeaders(this)" class="input-params">
+                              </td>
+                              <td class="headers-key">
+                                <input type="text" onkeydown="changesHeaders(this)" class="input-params">
+                              </td>
+                              <td class="headers-value">
+                                <input type="text" onkeydown="changesHeaders(this)" class="input-params">
+                              </td>
+                              <td class="headers-description">
+                                <input type="text" class="input-params">
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-4 hidden">
+                        <div class="material-tabs">
+                          <div class="tabbed-section__selector">
+                            <a class="sub-tabbed tabbed-section__selector-tab-6 active" href="#"> <input type="radio" checked="checked" name="body-form" value="none"> none</a>
+                            <a class="sub-tabbed tabbed-section__selector-tab-7" href="#"> <input type="radio" value="form-data" name="body-form"> form-data</a>
+                            
+                          </div>
+
+
+                          <div class="tabbed-section-6 visible">
+                            
+                            <div class="clear"></div>
+                          </div>
+                          <div class="tabbed-section-7 hidden">
+                            <table class="table-params" id="table-forms">
+                              <thead>
+                                <tr>
+                                  <th class="thead-check"></th>
+                                  <th class="thead-key">Key</th>
+                                  <th class="thead-value">Value</th>
+                                  <th class="thead-description">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tbody-forms">
+                                <tr>
+                                  <td class="headers-check text-right">
+                                    <input type="checkbox" class="input-params">
+                                  </td>
+                                  <td class="headers-key">
+                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                  </td>
+                                  <td class="headers-value">
+                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                  </td>
+                                  <td class="headers-description">
+                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                  </td>
+                                </tr>
+                                <tr id="last-row-headers">
+                                  <td class="headers-check text-right">
+                                    <input type="checkbox" onkeydown="changesForms(this)" class="input-params">
+                                  </td>
+                                  <td class="headers-key">
+                                    <input type="text" onkeydown="changesForms(this)" class="input-params">
+                                  </td>
+                                  <td class="headers-value">
+                                    <input type="text" onkeydown="changesForms(this)" class="input-params">
+                                  </td>
+                                  <td class="headers-description">
+                                    <input type="text" class="input-params">
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-5 hidden">
+                        <div class="col-8 tab-pre-scripts">
+                          <textarea name="" id="" rows="10"></textarea>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                    
+                    <div class="clear"></div>
                   </div>
+                  <div class="clear"></div>
+                  <div>
+                    This is response box
+                  </div>
+                  <div class="clear"></div>
                 </div>
               </div>
             </div>
@@ -239,6 +431,7 @@
     <!-- You can also require other files to run in this process -->
     <!-- <script src="./renderer.js"></script> -->
     <!-- <script src="../resources/custom/js/tab.js"></script> -->
+    <script src="../resources/custom/js/content-main-child.js"></script>
     <script src="../resources/custom/js/preloadDashboard.js"></script>
     <script src="../resources/custom/js/frame-list.js"></script>
     <script src="../resources/custom/vendor/tab/tab.js"></script>
@@ -258,5 +451,8 @@
         evt.currentTarget.className += " active";
       }
     </script>
+    <script src="../resources/custom/js/new-row.js"></script>
+    <script src="../resources/custom/js/headers.js"></script>
+    <script src="../resources/custom/js/body-data.js"></script>
   </body>
 </html>
