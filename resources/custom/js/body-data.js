@@ -1,10 +1,19 @@
 function allData() {
+	var url = document.getElementsByName("path")[0].value;
+	var ls = {};
+	if (url.length > 0) {
+		ls = url.split('?');
+		if (ls[0].length <= 0) url = "http://localhost?" + ls[1];
+		else if (ls[0].includes("https://") || ls[0].includes("http://")) {
+			url = ls[0] + "?" + ls[1];
+		}
+	}
+
 	var tbodyHeaders = document.getElementById("tbody-headers");
 	var tbodyBodys = document.getElementById("tbody-forms");
 	var oauthCheck = document.getElementsByName('authorize-type');
 	
 	var authValue = oauthCheck[0].value;
-	console.log(authValue)
 	var isAuthentication = false;
 	var authContent = "";
 	if (authValue != "none") {
@@ -58,7 +67,6 @@ function allData() {
 		body.type = checkValueForm;
 		var trBodyParent = tbodyBodys.childNodes;
 		var countBody = 0;
-		console.log(trBodyParent);
 		trBodyParent.forEach( function(element, index) {
 			if (element.tagName == 'TR') {
 				var tdParams = element.childNodes;
@@ -82,12 +90,13 @@ function allData() {
 
 	var data = { 
 		Req: {
+			Url: url,
 			Authen: authen,
 			Headers: headersParams,
 			Body: body
 		}
 	}
 
-	console.log(data);
+	// console.log(data);
 	return data;
 }
