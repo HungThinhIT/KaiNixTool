@@ -32,7 +32,7 @@ var responseData = {
 |
 */
 
-ipcMain.on('prepare-api-request', async(event, api) => {
+ipcMain.on('prepare-api-request', async (event, api) => {
     console.log(api);
 
     /*
@@ -48,35 +48,39 @@ ipcMain.on('prepare-api-request', async(event, api) => {
      */
     apiDev = {
         method: 'get',
-        url: 'http://localhost:3000/user',
+        param: '', //TODO WILLDO
+        
+        url: 'http://api.learnvoca.hungthinhit.com/user/',
+        header: '', //TODO WILL DO
+
         authenticate: {
             isAuth: true,
             type: 'Bearer',
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk1MDY0MjQwfQ.Y2jdwG8G1JHJOD4woXMrOOohNg7aY2zKVRQV3-_kqGo',
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk1NDc5ODc0fQ._n-hgeyFkqA9X9IUlxWYNNC581jMs-XePLcKyk1icdo',
         },
-        data: {},
+        data: {}, //This is body
     }
-   try {
-    const request = await axios({
-        method: apiDev.method,
-        url: apiDev.url,
-        data: apiDev.data,
-        headers: {
-            Authorization: `Bearer ${apiDev.authenticate.token}`,
-        }
-    })
-      console.log("DATA_IN_[request.js]");
-      console.log(request);
-      console.log(request.status);
-      console.log(request.data);
-      console.log("END_THEN");
-   } catch (error) {
-       console.log("ERROR_IN_[request.js]_execute api");
-       console.log(error);
-       console.log(error.message);
-       console.log(error.response.data);
-       console.log(error.response.status);
-   }
+    try {
+        const request = await axios({
+            method: apiDev.method,
+            url: apiDev.url,
+            data: apiDev.data,
+            headers: {
+                Authorization: `${apiDev.authenticate.type} ${apiDev.authenticate.token}`,
+            }
+        })
+        console.log("DATA_IN_[request.js]");
+        console.log(request);
+        console.log(request.status);
+        console.log(request.data);
+        console.log("END_THEN");
+    } catch (error) {
+        console.log("ERROR_IN_[request.js]_execute api");
+        console.log(error);
+        console.log(error.message);
+        console.log(error.response.data);
+        console.log(error.response.status);
+    }
 
 
 
@@ -103,7 +107,7 @@ ipcMain.on('prepare-api-request', async(event, api) => {
     //     console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
     //     console.log(response);
     //     // console.log(response.data);
-        
+
     //     response.on('data', (chunk) => {
     //         console.log(`BODY: ${chunk}`)
     //         console.log(chunk);
@@ -117,5 +121,5 @@ ipcMain.on('prepare-api-request', async(event, api) => {
     //     })
     //   })
     // request.end()
-    
+
 })
