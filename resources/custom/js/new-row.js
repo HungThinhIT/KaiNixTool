@@ -176,7 +176,8 @@ function fillPath(listRecord) {
   //   document.getElementById("path").value = tmpLs[0];
   // }
   // else {
-  var endPath = changeBlank(tmpLs[0] + "?" + tmpLs[1]);
+  var tempPath = tmpLs[0] + "?" + tmpLs[1];
+  var endPath = changeBlank(tempPath.toString());
   document.getElementById("path").value = endPath;
   // }
 }
@@ -188,10 +189,11 @@ function firstCheck(input) {
 }
 
 function changeBlank(val) {
+  console.log(val);
   if (val.length > 1) {
     if (val.includes("?")) {
       if (val.substr(0, 1) != "?") {
-        var ls = val.spit("?");
+        var ls = val.split('?');
         if (ls[0].length > 1) {
           if (ls[0].substr(ls[0].length - 1, 1) == "/") {
             val = ls[0].substr(0, ls[0].length - 1) + "?" + ls[1]; 
