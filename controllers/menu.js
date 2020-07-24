@@ -14,6 +14,7 @@ const ipcMain = global.share.ipcMain;
 |
 |
 */
+
 async function getHistoryApiMenu() {
     const hisApiMenu = await store.get('api-history-menu')
     await hisApiMenu.history.sort(sortByDate)

@@ -20,6 +20,7 @@
     "electron": "^9.0.0"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "dateformat": "^3.0.3",
     "electron-store": "^5.1.1"
   }
