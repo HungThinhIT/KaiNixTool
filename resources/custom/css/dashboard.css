@@ -58,6 +58,10 @@
   width: 75%;
 }
 
+.col-6 {
+  width: 50%;
+}
+
 .d-flex {
   display: flex;
 }

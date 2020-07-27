@@ -1,5 +1,8 @@
 (function () {
     var currTabGroup = null;
+    var titleResponse = document.getElementById('title-response');
+    var gifPreload = document.getElementsByClassName('gif-pre-load')[0];
+    
     window.addEventListener("mousedown", function (event) {
         // Check wether the target is a tab group
         var isTabGroup = hasParentClass(event.target, "tab-group");
@@ -118,6 +121,8 @@
                 group.addTab({});
             }
         }
+        titleResponse.style.display = 'block';
+        gifPreload.style.display = 'none';
     });
     window.addEventListener("click", function (event) {
         var isTabGroup = hasParentClass(event.target, "tab-group");
@@ -129,6 +134,8 @@
                 group.closeTab(isItem.parents[isItem.parents.length - 1], {});
             }
         }
+        titleResponse.style.display = 'block';
+        gifPreload.style.display = 'none';
     });
     HTMLDivElement.prototype.activateItem = function (item) {
         var isTabGroup = hasParentClass(this, "tab-group");

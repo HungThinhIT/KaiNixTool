@@ -14,13 +14,13 @@ function onChangeHandler(event) {
   console.log(oldLast);
   var textLastTR = '<tr class="item-last" id="last-row">' +
                       '<td class="params-check text-right">' +
-                        '<input type="checkbox" onkeydown="changess()" class="input-params">' +
+                        '<input type="checkbox" onkeydown="changesHeaders()" class="input-params">' +
                       '</td>' +
                       '<td class="params-key">' +
-                        '<input type="text" onkeydown="changess()" class="input-params">' +
+                        '<input type="text" onkeydown="changesHeaders()" class="input-params">' +
                       '</td>' +
                       '<td class="params-value">' +
-                        '<input type="text" onkeydown="changess()" class="input-params">' +
+                        '<input type="text" onkeydown="changesHeaders()" class="input-params">' +
                       '</td>' +
                       '<td class="params-description">' +
                         '<input type="text" class="input-params">' +
@@ -88,7 +88,11 @@ function changesParams(input) {
 
   var trParent = input.parentNode.parentNode;
   var newTrParent = trParent.cloneNode(true);
+  console.log(newTrParent);
   var newTdParent = newTrParent.childNodes;
+  console.log(newTdParent[1].childNodes[1]);
+  console.log(newTdParent[3].childNodes[1]);
+  console.log(newTdParent[5].childNodes[1]);
   newTdParent[1].childNodes[1].value = "";
   newTdParent[3].childNodes[1].value = "";
   newTdParent[5].childNodes[1].value = "";
@@ -189,7 +193,6 @@ function firstCheck(input) {
 }
 
 function changeBlank(val) {
-  console.log(val);
   if (val.length > 1) {
     if (val.includes("?")) {
       if (val.substr(0, 1) != "?") {
