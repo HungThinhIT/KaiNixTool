@@ -64,7 +64,7 @@
                   class="list-group-header"
                   style="background-color: #fafafa;"
                 >
-                  <input
+                  <input spellcheck="false"
                     class="form-control"
                     type="text"
                     placeholder="Filter"
@@ -194,7 +194,7 @@
                 <div class="content-main-request-fixed">
                   <form class="form-request">
                     <div class="col-2 method-request">
-                      <select name="method" id="method">
+                      <select name="method-request" id="method-request">
                         <option class="option-box" value="get">GET</option>
                         <option class="option-box" value="post">POST</option>
                         <option class="option-box" value="put">PUT</option>
@@ -208,7 +208,7 @@
                       </select>
                     </div>
                     <div class="col-8 path-request">
-                      <input
+                      <input spellcheck="false"
                         id="path"
                         required="required"
                         type="text"
@@ -219,7 +219,7 @@
                     </div>
                     <div class="form-content"></div>
                     <div class="col-2 send-request">
-                      <input
+                      <input spellcheck="false"
                         type="button"
                         class="btn-send-request"
                         name="submit"
@@ -258,30 +258,30 @@
                           <tbody id="tbody-params">
                             <tr>
                               <td class="params-check text-right">
-                                <input type="checkbox" onkeydown="firstCheck(this)" onchange="changeValue()" class="input-params">
+                                <input spellcheck="false" type="checkbox" onkeydown="firstCheck(this)" onchange="changeValue()" class="input-params">
                               </td>
                               <td class="params-key">
-                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
                               </td>
                               <td class="params-value">
-                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
                               </td>
                               <td class="params-description">
-                                <input type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" onkeyup="changeValue()" class="input-params">
                               </td>
                             </tr>
                             <tr id="last-row-params">
                               <td class="params-check text-right">
-                                <input type="checkbox" onchange="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                                <input spellcheck="false" type="checkbox" onchange="changeValue()" onkeydown="changesParams(this)" class="input-params">
                               </td>
                               <td class="params-key">
-                                <input type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
                               </td>
                               <td class="params-value">
-                                <input type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeyup="changeValue()" onkeydown="changesParams(this)" class="input-params">
                               </td>
                               <td class="params-description">
-                                <input type="text" onkeyup="changeValue()" class="input-params">
+                                <input spellcheck="false" type="text" onkeyup="changeValue()" class="input-params">
                               </td>
                             </tr>
                           </tbody>
@@ -318,30 +318,30 @@
                           <tbody id="tbody-headers">
                             <tr>
                               <td class="headers-check text-right">
-                                <input type="checkbox" class="input-params">
+                                <input spellcheck="false" type="checkbox" class="input-params">
                               </td>
                               <td class="headers-key">
-                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                               </td>
                               <td class="headers-value">
-                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                               </td>
                               <td class="headers-description">
-                                <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                               </td>
                             </tr>
                             <tr id="last-row-headers">
                               <td class="headers-check text-right">
-                                <input type="checkbox" onkeydown="changesHeaders(this)" class="input-params">
+                                <input spellcheck="false" type="checkbox" onkeydown="changesHeaders(this)" class="input-params">
                               </td>
                               <td class="headers-key">
-                                <input type="text" onkeydown="changesHeaders(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="changesHeaders(this)" class="input-params">
                               </td>
                               <td class="headers-value">
-                                <input type="text" onkeydown="changesHeaders(this)" class="input-params">
+                                <input spellcheck="false" type="text" onkeydown="changesHeaders(this)" class="input-params">
                               </td>
                               <td class="headers-description">
-                                <input type="text" class="input-params">
+                                <input spellcheck="false" type="text" class="input-params">
                               </td>
                             </tr>
                           </tbody>
@@ -351,8 +351,9 @@
                       <div class="tabbed tabbed-section-4 hidden">
                         <div class="material-tabs">
                           <div class="tabbed-section__selector">
-                            <a class="sub-tabbed tabbed-section__selector-tab-6 active" href="#"> <input type="radio" checked="checked" name="body-form" value="none"> none</a>
-                            <a class="sub-tabbed tabbed-section__selector-tab-7" href="#"> <input type="radio" value="form-data" name="body-form"> form-data</a>
+                            <a class="sub-tabbed tabbed-section__selector-tab-6 active" href="#"> <input spellcheck="false" type="radio" checked="checked" name="body-form" value="none"> none</a>
+                            <a class="sub-tabbed tabbed-section__selector-tab-7" href="#"> <input spellcheck="false" type="radio" value="form-data" name="body-form"> form-data</a>
+                            <a class="sub-tabbed tabbed-section__selector-tab-8" href="#"> <input spellcheck="false" type="radio" value="raw" name="body-form"> raw</a>
                             
                           </div>
 
@@ -361,6 +362,7 @@
                             
                             <div class="clear"></div>
                           </div>
+
                           <div class="tabbed-section-7 hidden">
                             <table class="table-params" id="table-forms">
                               <thead>
@@ -374,43 +376,51 @@
                               <tbody id="tbody-forms">
                                 <tr>
                                   <td class="headers-check text-right">
-                                    <input type="checkbox" class="input-params">
+                                    <input spellcheck="false" type="checkbox" class="input-params">
                                   </td>
                                   <td class="headers-key">
-                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                    <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                                   </td>
                                   <td class="headers-value">
-                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                    <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                                   </td>
                                   <td class="headers-description">
-                                    <input type="text" onkeydown="firstCheck(this)" class="input-params">
+                                    <input spellcheck="false" type="text" onkeydown="firstCheck(this)" class="input-params">
                                   </td>
                                 </tr>
                                 <tr id="last-row-headers">
                                   <td class="headers-check text-right">
-                                    <input type="checkbox" onkeydown="changesForms(this)" class="input-params">
+                                    <input spellcheck="false" type="checkbox" onkeydown="changesForms(this)" class="input-params">
                                   </td>
                                   <td class="headers-key">
-                                    <input type="text" onkeydown="changesForms(this)" class="input-params">
+                                    <input spellcheck="false" type="text" onkeydown="changesForms(this)" class="input-params">
                                   </td>
                                   <td class="headers-value">
-                                    <input type="text" onkeydown="changesForms(this)" class="input-params">
+                                    <input spellcheck="false" type="text" onkeydown="changesForms(this)" class="input-params">
                                   </td>
                                   <td class="headers-description">
-                                    <input type="text" class="input-params">
+                                    <input spellcheck="false" type="text" class="input-params">
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
-                            
+                          </div>
+                          <div class="tabbed-section-8 col-12 hidden">
+                            <div class="col-8 raw-data-form d-flex">
+                              <textarea readonlycols="30" rows="8" cols="3" class="rownr" value="1"></textarea>
+                              <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onscroll="scroll_changed(this)"></textarea>
+                            </div>
                             <div class="clear"></div>
                           </div>
                         </div>
                         <div class="clear"></div>
                       </div>
                       <div class="tabbed tabbed-section-5 hidden">
-                        <div class="col-8 tab-pre-scripts">
-                          <textarea name="" id="" rows="10"></textarea>
+                        <div class="col-8 tab-pre-scripts d-flex">
+                          <textarea readonlycols="30" rows="10" cols="3" class="rownr" value="1"></textarea>
+                          <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onscroll="scroll_changed(this)"></textarea>
                         </div>
                         <div class="clear"></div>
                       </div>
@@ -419,8 +429,95 @@
                     <div class="clear"></div>
                   </div>
                   <div class="clear"></div>
-                  <div>
-                    This is response box
+                  <div class="content-response-child">
+                    <div class="pre-load-response" id="pre-load-response">
+                      <h5 id="title-response">Response</h5>
+                      <div class="col-12 gif-pre-load text-center">
+                        <img src="../resources/custom/imgs/giphy.gif" alt="">
+                      </div>
+                    </div>
+
+                    <div class="material-tabs">
+                      <div class="col-12 d-flex">
+                        <div class="col-6">
+                          <div class="tabbed-section__selector">
+                            <a class="tabbed-section__selector-tab-9 active" href="#">Body</a>
+                            <a class="tabbed-section__selector-tab-10" href="#">Cookie</a>
+                            <a class="tabbed-section__selector-tab-11" href="#">Headers</a>
+                          </div>
+                        </div>
+                        <div class="col-6 right-response-nav">
+                          <div class="col-9 d-flex">
+                            <div class="col-4">Status: <span id="response-status">200 OK</span></div>
+                            <div class="col-4">Time: <span id="response-time">600 ms</span></div>
+                            <div class="col-4">Size: <span id="response-size">200 B</span></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      
+                      <div class="tabbed tabbed-section-9 visible">
+                        <div class="col-12 body-response-body">
+                          <div class="material-tabs">
+                            <div class="col-12 d-flex">
+                              <div class="col-3">
+                                <div class="tabbed-section__selector text-center">
+                                  <a class="tabbed-section__selector-tab-12 active" href="#">Pretty</a>
+                                  <a class="tabbed-section__selector-tab-13" href="#">Raw</a>
+                                  <a class="tabbed-section__selector-tab-14" href="#">Preview</a>
+                                </div>
+                              </div>
+                              <div class="col-2 type-pretty">
+                                <select name="pretty" id="pretty">
+                                  <option value="json">JSON</option>
+                                  <option value="html">HTML</option>
+                                </select>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                            <div class="tabbed tabbed-response tabbed-section-12 visible">
+                              <div class="col-12 d-flex" id="pretty-json">
+                                <textarea readonlycols="30" rows="9" cols="3" class="rownr-3" value="1"></textarea>
+                                <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onmouseover="input_changed(this)" onscroll="scroll_changed(this)" readonly>{
+  "": "",
+  "": ""
+}
+                            </textarea>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                            <div class="tabbed tabbed-response tabbed-section-13 hidden">
+                              <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" rows="8" spellcheck="false" readonly></textarea>
+                              <div class="clear"></div>
+                            </div>
+                            <div class="tabbed tabbed-response tabbed-section-14 hidden">
+                              <div class="col-12" id="load-preview">
+                                Don't have anything to show preview
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-10 hidden">
+                        <div class="response-cookies">
+                          <div class="no-cookies justify-content-center text-center">
+                            <img src="../resources/custom/imgs/cartoon-cookie-png-8.png" alt="">
+                            <br/>
+                            <span>No cookies were returned by the server</span>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      <div class="tabbed tabbed-section-11 hidden">
+                        
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                    
+                    <div class="clear"></div>
                   </div>
                   <div class="clear"></div>
                 </div>
@@ -451,6 +548,79 @@
         }
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
+      }
+    </script>
+    <script type="text/javascript">
+      var cntline;
+  
+      function keyup(obj, e)
+      {
+        if(e.keyCode >= 33 && e.keyCode <= 40) // arrows ; home ; end ; page up/down
+          selectionchanged(obj, e.keyCode);
+      }
+      
+      // function selectionchanged(obj)
+      // {
+      //   var substr = obj.value.substring(0,obj.selectionStart).split('\n');
+      //   var row = substr.length;
+      //   var col = substr[substr.length-1].length;
+      //   var tmpstr = '(' + row.toString() + ',' + col.toString() + ')';
+      //   // if selection spans over 
+      //   if(obj.selectionStart != obj.selectionEnd)
+      //   {
+      //     substr = obj.value.substring(obj.selectionStart, obj.selectionEnd).split('\n');
+      //     row += substr.length - 1;
+      //     col = substr[substr.length-1].length;
+      //     tmpstr += ' - (' + row.toString() + ',' + col.toString() + ')';
+      //   }
+      //   obj.parentElement.getElementsByTagName('input')[0].value = tmpstr;
+      // }
+      
+      function input_changed(obj_txt)
+      {
+        obj_rownr = obj_txt.parentElement.parentElement.getElementsByTagName('textarea')[0];
+        cntline = count_lines(obj_txt.value);
+        if(cntline == 0) cntline = 1;
+        tmp_arr = obj_rownr.value.split('\n');
+        cntline_old = parseInt(tmp_arr[tmp_arr.length - 1], 10);
+        // if there was a change in line count
+        if(cntline != cntline_old)
+        {
+          obj_rownr.cols = cntline.toString().length; // new width of txt_rownr
+          populate_rownr(obj_rownr, cntline);
+          scroll_changed(obj_txt);
+        }
+      }
+      
+      function scroll_changed(obj_txt)
+      {
+        obj_rownr = obj_txt.parentElement.parentElement.getElementsByTagName('textarea')[0];
+        scrollsync(obj_txt,obj_rownr);
+      }
+      
+      function scrollsync(obj1, obj2)
+      {
+        // scroll text in object id1 the same as object id2
+        obj2.scrollTop = obj1.scrollTop;
+      }
+      
+      function populate_rownr(obj, cntline)
+      {
+        tmpstr = '';
+        for(i = 1; i <= cntline; i++)
+        {
+          tmpstr = tmpstr + i.toString() + '\n';
+        }
+        obj.value = tmpstr;
+      }
+      
+      function count_lines(txt)
+      {
+        if(txt == '')
+        {
+          return 1;
+        }
+        return txt.split('\n').length + 1;
       }
     </script>
     <script src="../resources/custom/js/new-row.js"></script>

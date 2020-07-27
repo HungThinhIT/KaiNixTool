@@ -1,4 +1,11 @@
 function allData() {
+
+	var preloadResponse = document.getElementsByClassName('pre-load-response')[0];
+	preloadResponse.style.display = 'block';
+	var titleResponse = document.getElementById('title-response');
+	titleResponse.style.display = 'none';
+	var gifPreload = document.getElementsByClassName('gif-pre-load')[0];
+	gifPreload.style.display = 'block';
 	var url = document.getElementsByName("path")[0].value;
 	var ls = {};
 	if (url.length > 0) {
@@ -8,17 +15,45 @@ function allData() {
 			url = ls[0] + "?" + ls[1];
 		}
 	}
+	else {
+		url = "http://localhost";
+	}
 
 	var tbodyHeaders = document.getElementById("tbody-headers");
 	var tbodyBodys = document.getElementById("tbody-forms");
 	var oauthCheck = document.getElementsByName('authorize-type');
-	
+	var methodRequest = document.getElementsByName("method-request");
+	var methodType = methodRequest[0].value;
+
 	var authValue = oauthCheck[0].value;
 	var isAuthentication = false;
 	var authContent = "";
 	if (authValue != "none") {
 		isAuthentication = true;
-		authContent = document.getElementsByName("auth-token")[0];
+		authContent = document.getElementsByName("auth-token")[0].value;
+		if (!authContent.includes("Bearer")) {
+			authContent = authContent.trim();
+			if (authContent.length > 1) {
+				var authList = authContent.split(/\s/g);
+				authContent = "";
+				authList.forEach( function(element, index) {
+					authContent += element;
+				});
+			}
+			authContent = "Bearer " + authContent;
+		}
+		else {
+			authContent = authContent.substr("Bearer ".length - 1, authContent.length - 1);
+			authContent = authContent.trim();
+			if (authContent.length > 1) {
+				var authList = authContent.split(/\s/g);
+				authContent = "";
+				authList.forEach( function(element, index) {
+					authContent += element;
+				});
+			}
+			authContent = "Bearer " + authContent;
+		}
 	}
 
 	// Authentication
@@ -53,7 +88,6 @@ function allData() {
 	});
 	if (countHeader == 0) headersParams = {};
 
-
 	// Body
 	var checkValueForm = "none";
 	var formCheck = document.getElementsByName('body-form');
@@ -64,28 +98,34 @@ function allData() {
 	});
 	var body = {}
 	if (checkValueForm != "none") {
-		body.type = checkValueForm;
-		var trBodyParent = tbodyBodys.childNodes;
-		var countBody = 0;
-		trBodyParent.forEach( function(element, index) {
-			if (element.tagName == 'TR') {
-				var tdParams = element.childNodes;
-				var isCheck = tdParams[1].childNodes[1].checked;
-				var key = tdParams[3].childNodes[1].value;
-				var value = tdParams[5].childNodes[1].value;
-				var description = tdParams[7].childNodes[1].value;
-				if (isCheck == true) {
-					body[countBody] = {
-						isCheck: isCheck,
-						key: key,
-						value: value,
-						description: description
+		if (checkValueForm == "form-data") {
+			body.type = checkValueForm;
+			var trBodyParent = tbodyBodys.childNodes;
+			var countBody = 0;
+			trBodyParent.forEach( function(element, index) {
+				if (element.tagName == 'TR') {
+					var tdParams = element.childNodes;
+					var isCheck = tdParams[1].childNodes[1].checked;
+					var key = tdParams[3].childNodes[1].value;
+					var value = tdParams[5].childNodes[1].value;
+					var description = tdParams[7].childNodes[1].value;
+					if (isCheck == true) {
+						body[countBody] = {
+							isCheck: isCheck,
+							key: key,
+							value: value,
+							description: description
+						}
+						countBody++;
 					}
-					countBody++;
 				}
-			}
-		});
-		if (countBody == 0) body = {};
+			});
+			if (countBody == 0) body = {};
+		}
+		else if (checkValueForm == "raw"){
+			body.type = checkValueForm;
+			
+		}
 	}
 
 	var data = { 
@@ -93,10 +133,19 @@ function allData() {
 			Url: url,
 			Authen: authen,
 			Headers: headersParams,
-			Body: body
+			Body: body,
+			Type: methodType
 		}
 	}
 
-	// console.log(data);
+	console.log(data);
+	setTimeout(function() {
+		titleResponse.style.display = 'block';
+		gifPreload.style.display = 'none';
+		var preloadResponse = document.getElementsByClassName('pre-load-response')[0];
+		preloadResponse.style.display = 'none';
+	}, 1000);
+
 	return data;
 }
+
