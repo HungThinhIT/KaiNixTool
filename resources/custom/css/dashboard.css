@@ -85,3 +85,12 @@
 .align-content-center {
   align-content: center;
 }
+
+.pure-table {
+  table-layout: auto;
+}
+
+.pure-table tr th,
+.pure-table tr td {
+  padding: 2px;
+}
