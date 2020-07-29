@@ -448,8 +448,8 @@
                         </div>
                         <div class="col-6 right-response-nav">
                           <div class="col-9 d-flex">
-                            <div class="col-4">Status: <span id="response-status">200 OK</span></div>
-                            <div class="col-4">Time: <span id="response-time">600 ms</span></div>
+                            <div class="col-4">Status: <span id="response-status">200</span></div>
+                            <div class="col-4">Time: <span id="response-time">600</span></div>
                             <div class="col-4">Size: <span id="response-size">200 B</span></div>
                           </div>
                         </div>
@@ -470,7 +470,7 @@
                               <div class="col-2 type-pretty">
                                 <select name="pretty" id="pretty">
                                   <option value="json">JSON</option>
-                                  <option value="html">HTML</option>
+                                  <!-- <option value="html">HTML</option> -->
                                 </select>
                               </div>
                               <div class="clear"></div>
@@ -478,17 +478,17 @@
                             <div class="tabbed tabbed-response tabbed-section-12 visible">
                               <div class="col-12 d-flex" id="pretty-json">
                                 <textarea readonlycols="30" rows="9" cols="3" class="rownr-3" value="1"></textarea>
-                                <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                                <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="textarea-pretty" id="textarea-pretty" nowrap="nowrap" wrap="off"
                             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onmouseover="input_changed(this)" onscroll="scroll_changed(this)" readonly>{
   "": "",
   "": ""
 }
-                            </textarea>
+                                </textarea>
                               </div>
                               <div class="clear"></div>
                             </div>
                             <div class="tabbed tabbed-response tabbed-section-13 hidden">
-                              <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" rows="8" spellcheck="false" readonly></textarea>
+                              <textarea class="txt-90" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="textarea-raw" id="textarea-raw" rows="8" spellcheck="false" readonly></textarea>
                               <div class="clear"></div>
                             </div>
                             <div class="tabbed tabbed-response tabbed-section-14 hidden">
@@ -503,7 +503,7 @@
                       </div>
                       <div class="tabbed tabbed-section-10 hidden">
                         <div class="response-cookies">
-                          <div class="no-cookies justify-content-center text-center">
+                          <div class="no-cookies justify-content-center text-center" id="load-cookies">
                             <img src="../resources/custom/imgs/cartoon-cookie-png-8.png" alt="">
                             <br/>
                             <span>No cookies were returned by the server</span>
@@ -512,7 +512,24 @@
                         <div class="clear"></div>
                       </div>
                       <div class="tabbed tabbed-section-11 hidden">
-                        
+                        <div class="response-header" id="response-header">
+                          <table class="pure-table">
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th>Key</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody-response-table">
+                              <tr>
+                                <td></td>
+                                <td>a sddfadf adfabfavd sfadf</td>
+                                <td>avsdfa </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                         <div class="clear"></div>
                       </div>
                     </div>
