@@ -1,8 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain} = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 var pjson = require("./package.json");
 const Store = require('electron-store');
+const fs = require('fs');
 
 function createWindow() {
   // Create the browser window.
@@ -49,7 +50,7 @@ app.setAboutPanelOptions({
   applicationName: "KaiNix",
   applicationVersion: "Version",
   version: pjson.version,
-  copyright: "Copyright © 2020 Kaiser & Phoenix",
+  copyright: "Copyright © 2020 Kaiser & Phoenix & SinJunior",
 });
 
 console.log("User Data path" + app.getPath('userData'));
@@ -59,98 +60,13 @@ console.log("User Data path" + app.getPath('userData'));
 */
 const store = new Store();
 
-async function restoreHistoryApiMenu(){
-    const hisApiMenu = await store.get('api-history-menu')
-    return hisApiMenu
-    
-}
+global.share = { ipcMain, store};
+
+if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)) 
+  store.set('api-history-menu.history',[]);
 
 /*
- * LISTENING ALL REQUEST FROM IPC RENDERER
+ * LOGIC Files
  */
-ipcMain.on('menu-history-api', async(event) => {
-  const hisApiMenu = await restoreHistoryApiMenu()
-  event.returnValue = await hisApiMenu
-});
-
-// TODO: IN PROGESS
-
-// ipcMain.on('send-api', async(event, arg) => {
-//   console.log("SEND_API_IN_MAIN_IS_RUNNING");
-//   console.log(arg);
-  
-//   event.sender.send('rec-api-history',' OK OK OK')
-// })
-
-// let historyMenu = {
-//   history: [
-//     date
-//     isOpen,
-//     {
-//       apiEndPoint : [
-//         api,
-//         method
-//       ]
-//     },
-      
-    
-//   ]
-// }
-
-// let historyMenu = {
-//   history: [
-//     {
-//       date: 'Today',
-//       isOpen: true,
-//       apiEndPoint: [
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-//           method: 'get'
-//         },
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend2',
-//           method: 'post'
-//         },
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend-never-die',
-//           method: 'put'
-//         }
-//       ]
-//     },
-//     {
-//       date: '07101999',
-//       isOpen: false,
-//       apiEndPoint: [
-//         {
-//           api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-//           method: 'delete'
-//         }
-//       ]
-//     }
-//   ]
-// }
-// console.log(historyMenu.history);
-
-// // historyMenu.history.date = 'Today';
-// // historyMenu.history.push({date : "Today", "isOpen": false, apiEndPoint: [ api = 'apineee', method = 'get']});
-
-// // store.set('api-history-menu',historyMenu);
-// // store.set('history[].isOpen',true);
-
-// // store.set('unicorn', '🦄');
-// // console.log(store.get('unicorn'));
-// // //=> '🦄'
-
-// // // Use dot-notation to access nested properties
-// // store.set('foo.bar', true);
-// obbjhs = store.get('api-history-menu.history');
-// console.log("-=-=");
-
-// Object.keys(obbjhs).forEach(key => {
-//   console.log(obbjhs[key].date)
-//   });
-// // //=> {bar: true}
-
-// // store.delete('unicorn');
-// console.log(store.get('unicorn'));
-// //=> undefined
+require("./controllers/request");
+require("./controllers/menu");
