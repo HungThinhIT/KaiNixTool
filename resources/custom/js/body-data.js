@@ -29,6 +29,7 @@ function allData() {
 	var isAuthentication = false;
 	var authContent = "";
 	if (authValue != "none") {
+		if (authValue == "oauth-2") authValue = "Bearer";
 		isAuthentication = true;
 		authContent = document.getElementsByName("auth-token")[0].value;
 		if (!authContent.includes("Bearer")) {
@@ -40,7 +41,6 @@ function allData() {
 					authContent += element;
 				});
 			}
-			authContent = "Bearer " + authContent;
 		}
 		else {
 			authContent = authContent.substr("Bearer ".length - 1, authContent.length - 1);
@@ -52,7 +52,6 @@ function allData() {
 					authContent += element;
 				});
 			}
-			authContent = "Bearer " + authContent;
 		}
 	}
 
