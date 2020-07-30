@@ -1,5 +1,6 @@
 const ipcRenderer = require('electron').ipcRenderer;
 const dateFormat = require('dateformat');
+require("./preloads/main/main-screen-preload.js");
 
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -50,32 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
   */
   document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
 
-    const date = dateFormat(new Date(), "yyyy-mm-dd");
-    const idApi = dateFormat(new Date(), "yyyymmddHHMMssL");
-    const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L"); //2020-06-01 15:04:16:09 -> example
-    //const isOpen = '' //TODO: WAITING UI is finish.
-    //const api = ''//TODO: WAITING UI is finish.
-    //const method = ''//TODO: WAITING UI is finish.
-    console.log(timeRequest)
-    let api = {
-      date: date,
-      isOpen: true,
-      apiEndPoint: [
-        {
-          id: idApi,
-          timeRequest: timeRequest,
-          api: 'api.hungthinhit.com/v1/phoenix/is/legend',
-          method: 'get'
-        }
-      ]
-    }
-    //
-    const dataRequest  = ipcRenderer.sendSync('prepare-api-request', (event, api.apiEndPoint))
-    console.log(dataRequest);
-    ipcRenderer.send('set-executed-api-to-local-store', (event, api))
     
-
-    // ipcRenderer.on
     
   })
 })  

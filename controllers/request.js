@@ -1,8 +1,8 @@
 const axios = require('axios');
+const { autoUpdater } = require('electron');
 
 const store = global.share.store;
 const ipcMain = global.share.ipcMain;
-
 /*
 |-----------------------------------------------
 | Response Data Struct
@@ -17,8 +17,44 @@ const ipcMain = global.share.ipcMain;
 var responseData = {
     statusCode: null,
     header: null,
-    data: null, //contain chunked-body-data
+    responseBody: null, //contain chunked-body-data
+    originRequest: null,
+    size: null,
+    timeMs: null
 }
+
+/*
+|-----------------------------------------------
+| Response time (ms) for axios
+|-----------------------------------------------
+|
+| This is interceptors help calculate response
+| time from axios and return in 
+| x.config.meta.requestStartedAt
+|
+|
+*/
+axios.interceptors.request.use( x => {
+    // to avoid overwriting if another interceptor
+    // already defined the same object (meta)
+    x.meta = x.meta || {}
+    x.meta.requestStartedAt = new Date().getTime();
+    return x;
+})
+
+axios.interceptors.response.use( x => {
+    console.log(`Execution time for: ${x.config.url} - ${ new Date().getTime() - x.config.meta.requestStartedAt} ms`)
+    return x;
+},
+    // Handle 4xx & 5xx responses
+    x => {
+        console.error(`Execution time for: ${x.config.url} - ${new Date().getTime() - x.config.meta.requestStartedAt} ms`)
+        throw x;
+    }
+)
+
+
+
 
 /*
 |-----------------------------------------------
@@ -32,57 +68,69 @@ var responseData = {
 |
 */
 
-ipcMain.on('prepare-api-request', async (event, api) => {
+ipcMain.on('send-api-request', async (event, api) => {
     console.log(api);
-
     /*
     * STRUCT_API:
     *     id: idApi,
     *     timeRequest: timeRequest,
-    *     api: 'jsonplaceholder.typicode.com/albums/1/photos',
-    *     method: 'get'
+    *     url: 'jsonplaceholder.typicode.com/albums/1/photos',
+    *     method: 'get',
+    *     headers: data.Req.Headers,
+    *     authenticate: data.Req.Authen,
+    *     body: data.Req.Body
     */
 
-    /**
-     * DEBUG_API
-     */
-    apiDev = {
-        method: 'get',
-        param: '', //TODO WILLDO
-        
-        url: 'http://api.learnvoca.hungthinhit.com/user/',
-        header: '', //TODO WILL DO
-
-        authenticate: {
-            isAuth: true,
-            type: 'Bearer',
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk1NDc5ODc0fQ._n-hgeyFkqA9X9IUlxWYNNC581jMs-XePLcKyk1icdo',
-        },
-        data: {}, //This is body
-    }
     try {
-        const request = await axios({
-            method: apiDev.method,
-            url: apiDev.url,
-            data: apiDev.data,
-            headers: {
-                Authorization: `${apiDev.authenticate.type} ${apiDev.authenticate.token}`,
-            }
+        const headers = await getHeaders(api.authenticate.isAuthen, api.headers)
+
+        let request = await axios({
+            method: api.method,
+            url: api.url,
+            data: api.body,
+            headers,
+            
         })
+
+        
         console.log("DATA_IN_[request.js]");
-        console.log(request);
-        console.log(request.status);
-        console.log(request.data);
-        console.log("END_THEN");
+        const responseTime = new Date().getTime() - request.config.meta.requestStartedAt
+        responseData.statusCode = request.status
+        responseData.responseBody = request.data
+        responseData.originRequest = api
+        responseData.timeMs = responseTime
+
+        console.log("REQUEST.JS => Response debugger");
+        console.log(responseData);
+        event.returnValue = responseData
     } catch (error) {
         console.log("ERROR_IN_[request.js]_execute api");
-        console.log(error);
-        console.log(error.message);
-        console.log(error.response.data);
-        console.log(error.response.status);
+        // const responseTime = new Date().getTime() - error.config.meta.requestStartedAt
+        // responseData.statusCode = error.response.status
+        // responseData.responseBody = error.message
+        // responseData.originRequest = api
+        // responseData.timeMs = responseTime
+        console.log("ENDDD");
+        // console.log(error);
+        console.log("message: " + error.message);
+        console.log("data: " + error.response.data);
+        console.log("status: " + error.response.status);
+        event.returnValue = responseData
+
     }
 
+async function getHeaders(isAuthen, originHeader){
+    var headers = {}
+    Object.keys(api.headers).forEach(element => {
+        headers[api.headers[element].key] = api.headers[element].value
+    });
 
+    if(api.authenticate.isAuthen){
+        headers.Authorization = `${api.authenticate.type} ${api.authenticate.token}`
+    }
+
+    return headers
+}
 
 
 
