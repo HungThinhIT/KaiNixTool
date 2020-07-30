@@ -285,11 +285,11 @@ textarea::-webkit-scrollbar-thumb {
   color: white;
   text-align: right;
   vertical-align: top;
-  width: 3%!important;
+  width: 5%!important;
 }
 
 .txt {
-  width: 95%;
+  width: 93%;
   overflow-x: scroll;
 }
 
