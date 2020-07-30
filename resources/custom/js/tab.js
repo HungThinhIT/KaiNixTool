@@ -121,8 +121,8 @@
                 group.addTab({});
             }
         }
-        titleResponse.style.display = 'block';
-        gifPreload.style.display = 'none';
+        // titleResponse.style.display = 'block';
+        // gifPreload.style.display = 'none';
     });
     window.addEventListener("click", function (event) {
         var isTabGroup = hasParentClass(event.target, "tab-group");
@@ -134,8 +134,8 @@
                 group.closeTab(isItem.parents[isItem.parents.length - 1], {});
             }
         }
-        titleResponse.style.display = 'block';
-        gifPreload.style.display = 'none';
+        // titleResponse.style.display = 'block';
+        // gifPreload.style.display = 'none';
     });
     HTMLDivElement.prototype.activateItem = function (item) {
         var isTabGroup = hasParentClass(this, "tab-group");
