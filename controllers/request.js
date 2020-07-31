@@ -107,7 +107,7 @@ ipcMain.on('send-api-request', async (event, rawRequest) => {
         // event.returnValue = responseData
         event.sender.send('response-api-data', responseData)
     } catch (error) {
-        responseErrorData = {
+        var responseErrorData = {
             statusCode: null,
             header: null,
             responseBody: null, //contain chunked-body-data
@@ -118,16 +118,16 @@ ipcMain.on('send-api-request', async (event, rawRequest) => {
         }
         if(error.response != undefined){
             const responseTime = new Date().getTime() - error.config.meta.requestStartedAt
-            responseData.statusCode = error.response.status
-            responseData.responseBody = error.response.data
-            responseData.originRequest = api
-            responseData.timeMs = responseTime
-            console.log(responseData);
-            event.sender.send('response-api-data',  responseData)
+            responseErrorData.statusCode = error.response.status
+            responseErrorData.responseBody = error.response.data
+            responseErrorData.originRequest = api
+            responseErrorData.timeMs = responseTime
+            console.log(responseErrorData);
+            event.sender.send('response-api-data',  responseErrorData)
         }else{
-            responseData.isFatalError = true
-            responseData.responseBody = error.message
-            event.sender.send('response-api-data',  responseData)
+            responseErrorData.isFatalError = true
+            responseErrorData.responseBody = error.message
+            event.sender.send('response-api-data',  responseErrorData)
 
         }
     }

@@ -373,7 +373,7 @@ function setChangeType() {
     var txt = '<div class="col-12 d-flex">' +
                         '<div class="col-3">Bearer Token</div>' +
                         '<div class="col-9 ">' +
-                          '<input class="full-width" value="Bearer " type="text" name="auth-token"' + 'id="auth-token">' +
+                          '<input class="full-width" value="" type="text" name="auth-token"' + 'id="auth-token">' +
                         '</div>' +
                       '</div>';
     authContent.innerHTML = txt;
