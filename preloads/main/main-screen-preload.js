@@ -226,40 +226,29 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log(api);
         // const dataResponse  = ipcRenderer.sendSync('send-api-request', (event, api.apiEndPoint[0]))
         
-        var dataResponse = null;
-        var errorLog = document.getElementById('error-log');
-        try {
-            errorLog.style.display = "none";
-            dataResponse  = ipcRenderer.sendSync('send-api-request', (event, api.apiEndPoint[0]))
-            if (typeof(dataResponse) != null) {
-                setTimeout(() => {
-                    fillResponseData(dataResponse);
-                }, 300);
-            }
-        } catch (error) {
-            setTimeout(() => {
-                fillWrongData(data.Req.Type, timeRequest, error);
-            }, 300);
-        }
+        // var dataResponse = null;
+        // var errorLog = document.getElementById('error-log');
+        ipcRenderer.send('send-api-request', (event, api))
         console.log("DATA_RESPONSE IN [main-screen-preload.js]");
-        console.log(dataResponse);
-        ipcRenderer.send('set-executed-api-to-local-store', (event, api))
-        
-        
-        // return data;
-
-
-    // ipcRenderer.on
-
-
-
-
-
-
-
-
-
     })
+});
+
+ipcRenderer.on('response-api-data', (event, dataResponse) => {
+    var errorLog = document.getElementById('error-log');
+    try {
+        console.log("data_response_here");
+        console.log(dataResponse);
+        errorLog.style.display = "none";
+        if (typeof(dataResponse) != null) {
+            fillResponseData(dataResponse);
+            ipcRenderer.send('set-executed-api-to-local-store', (event, dataResponse.stockOriginRequest))
+        }
+    } catch (error) {
+        console.log(error);
+        //2 CASE ERROR
+        // CHECK IF error.isFatalError = true and ELSE
+        fillWrongData(data.Req.Type, timeRequest, error);
+    }
 })
 
 function fillWrongData(method, requestTime, error) {

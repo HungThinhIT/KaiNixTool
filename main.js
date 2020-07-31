@@ -62,8 +62,10 @@ const store = new Store();
 
 global.share = { ipcMain, store};
 
-if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)) 
+if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)){
   store.set('api-history-menu.history',[]);
+  store.set('main-screen.list-tab', []);
+} 
 
 /*
  * LOGIC Files

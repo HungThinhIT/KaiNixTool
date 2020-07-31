@@ -69,6 +69,9 @@ window.addEventListener("click",  (event) => {
  * All function below.
  */
 function setHistoryApiMenu(historyMenuApi){
+  console.log("++");
+  console.log(historyMenuApi);
+  console.log("++");
   var historyMenuApiHtml = '';
   var data = historyMenuApi;  
   Object.keys(data.history).forEach(key => {
@@ -80,7 +83,7 @@ function setHistoryApiMenu(historyMenuApi){
             ${Object.keys(data.history[key].apiEndPoint).map(keyOfApiEP => (
             `<li data-api-id="${data.history[key].apiEndPoint[keyOfApiEP].id}">
               <span class="method method-${data.history[key].apiEndPoint[keyOfApiEP].method}">${data.history[key].apiEndPoint[keyOfApiEP].method}</span>
-              <span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].api}</span>
+              <span class="method-link">${data.history[key].apiEndPoint[keyOfApiEP].url}</span>
             </li>\n`
             )).join('')}
           </ul>

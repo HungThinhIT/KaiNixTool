@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { autoUpdater } = require('electron');
 
 const store = global.share.store;
 const ipcMain = global.share.ipcMain;
@@ -16,9 +15,10 @@ const ipcMain = global.share.ipcMain;
 */
 var responseData = {
     statusCode: null,
-    header: null,
+    responseHeaders: null,
     responseBody: null, //contain chunked-body-data
     originRequest: null,
+    stockOriginRequest: null,
     size: null,
     timeMs: null
 }
@@ -68,8 +68,8 @@ axios.interceptors.response.use( x => {
 |
 */
 
-ipcMain.on('send-api-request', async (event, api) => {
-    console.log(api);
+ipcMain.on('send-api-request', async (event, rawRequest) => {
+    console.log(rawRequest.apiEndPoint[0]);
     /*
     * STRUCT_API:
     *     id: idApi,
@@ -81,6 +81,7 @@ ipcMain.on('send-api-request', async (event, api) => {
     *     body: data.Req.Body
     */
 
+    const api = rawRequest.apiEndPoint[0];
     try {
         const headers = await getHeaders(api.authenticate.isAuthen, api.headers)
 
@@ -92,31 +93,43 @@ ipcMain.on('send-api-request', async (event, api) => {
             
         })
 
-        
         console.log("DATA_IN_[request.js]");
         const responseTime = new Date().getTime() - request.config.meta.requestStartedAt
         responseData.statusCode = request.status
+        responseData.responseHeaders = request.headers
         responseData.responseBody = request.data
         responseData.originRequest = api
+        responseData.stockOriginRequest = rawRequest
         responseData.timeMs = responseTime
 
         console.log("REQUEST.JS => Response debugger");
         console.log(responseData);
-        event.returnValue = responseData
+        // event.returnValue = responseData
+        event.sender.send('response-api-data', responseData)
     } catch (error) {
-        console.log("ERROR_IN_[request.js]_execute api");
-        // const responseTime = new Date().getTime() - error.config.meta.requestStartedAt
-        // responseData.statusCode = error.response.status
-        // responseData.responseBody = error.message
-        // responseData.originRequest = api
-        // responseData.timeMs = responseTime
-        console.log("ENDDD");
-        // console.log(error);
-        console.log("message: " + error.message);
-        console.log("data: " + error.response.data);
-        console.log("status: " + error.response.status);
-        event.returnValue = responseData
+        responseErrorData = {
+            statusCode: null,
+            header: null,
+            responseBody: null, //contain chunked-body-data
+            originRequest: null,
+            size: null,
+            timeMs: null,
+            isFatalError: false,
+        }
+        if(error.response != undefined){
+            const responseTime = new Date().getTime() - error.config.meta.requestStartedAt
+            responseData.statusCode = error.response.status
+            responseData.responseBody = error.response.data
+            responseData.originRequest = api
+            responseData.timeMs = responseTime
+            console.log(responseData);
+            event.sender.send('response-api-data',  responseData)
+        }else{
+            responseData.isFatalError = true
+            responseData.responseBody = error.message
+            event.sender.send('response-api-data',  responseData)
 
+        }
     }
 
 async function getHeaders(isAuthen, originHeader){
