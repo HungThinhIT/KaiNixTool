@@ -231,7 +231,6 @@ window.addEventListener('DOMContentLoaded', () => {
         // var dataResponse = null;
         // var errorLog = document.getElementById('error-log');
         ipcRenderer.send('send-api-request', (event, api))
-        console.log("DATA_RESPONSE IN [main-screen-preload.js]");
     })
 });
 
@@ -240,12 +239,11 @@ ipcRenderer.on('response-api-data', (event, dataResponse) => {
     const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L");
     var errorLog = document.getElementById('error-log');
     try {
-        console.log("data_response_here");
+        console.log("DATA_RESPONSE IN [main-screen-preload.js]");
         console.log(dataResponse);
         errorLog.style.display = "none";
         if (typeof(dataResponse) != null) {
             fillResponseData(dataResponse);
-            ipcRenderer.send('set-executed-api-to-local-store', (event, dataResponse.stockOriginRequest))
         }
     } catch (error) {
         console.log(error);
@@ -343,6 +341,9 @@ function fillResponseData(responseData) {
     var originRequest = responseData.originRequest;
     var isFatalError = responseData.isFatalError;
     if (!isFatalError) {
+
+        ipcRenderer.send('set-executed-api-to-local-store', (event, dataResponse.stockOriginRequest))
+
         /**
          * Set hide error content
          */

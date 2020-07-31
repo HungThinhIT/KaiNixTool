@@ -69,9 +69,6 @@ window.addEventListener("click",  (event) => {
  * All function below.
  */
 function setHistoryApiMenu(historyMenuApi){
-  console.log("++");
-  console.log(historyMenuApi);
-  console.log("++");
   var historyMenuApiHtml = '';
   var data = historyMenuApi;  
   Object.keys(data.history).forEach(key => {
