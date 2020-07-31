@@ -231,7 +231,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // var dataResponse = null;
         // var errorLog = document.getElementById('error-log');
         ipcRenderer.send('send-api-request', (event, api))
-    });
+    })
 
     /**
      * GET all request data by api-data-id when click li element
@@ -243,48 +243,76 @@ window.addEventListener('DOMContentLoaded', () => {
         };
         $('[data-api-id]').forEach(function(li, index) {
             li.addEventListener('click', function() {
+                
                 var apiId = this.getAttribute('data-api-id');
                 console.log(this.getAttribute('data-api-id'));
                 // TODO: get all request data for this ID 
+                ipcRenderer.send('find-data-via-menu-id', (event, apiId))
             });
         });
     }
 });
-
-ipcRenderer.on('response-api-data', (event, dataResponse) => {
-    const method = document.getElementById('method-request')[0].value;
-    const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L");
-    var errorLog = document.getElementById('error-log');
-    try {
-        console.log("DATA_RESPONSE IN [main-screen-preload.js]");
-        console.log(dataResponse);
-        errorLog.style.display = "none";
-        if (typeof(dataResponse) != null) {
-            fillResponseData(dataResponse);
+    /*
+    |-----------------------------------------------
+    | IPC ON Response api requested and fill to UI
+    |-----------------------------------------------
+    |
+    | When the api executed and send response, this
+    | function will listen and check, then fill
+    | data to UI
+    |
+    |
+    */
+    ipcRenderer.on('response-api-data', (event, dataResponse) => {
+        const method = document.getElementById('method-request')[0].value;
+        const timeRequest = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss:L");
+        var errorLog = document.getElementById('error-log');
+        try {
+            console.log("DATA_RESPONSE IN [main-screen-preload.js]");
+            console.log(dataResponse);
+            errorLog.style.display = "none";
+            if (typeof(dataResponse) != null) {
+                fillResponseData(dataResponse);
+            }
+        } catch (error) {
+            console.log(error);
+            //2 CASE ERROR
+            // CHECK IF error.isFatalError = true and ELSE
+            // fillWrongData(method, timeRequest, error);
+            fillWrongData(error);
         }
-    } catch (error) {
-        console.log(error);
-        //2 CASE ERROR
-        // CHECK IF error.isFatalError = true and ELSE
-        // fillWrongData(method, timeRequest, error);
-        fillWrongData(error);
-    }
-})
+    })
 
-function fillWrongData(error) {
-    var errorEle = document.getElementById('error-log-response');
-    errorEle.style.display = 'block';
-    var errorContentEle = document.getElementById('error-content');
-    errorContentEle.innerText = error;
-    var titleResponse = document.getElementById('title-response');
-    var gifPreload = document.getElementsByClassName('gif-pre-load')[0];
-    titleResponse.style.display = 'block';
-    gifPreload.style.display = 'none';
-    var preloadResponse = document.getElementsByClassName('pre-load-response')[0];
-    preloadResponse.style.display = 'none';
+    /*
+    |-----------------------------------------------
+    | Get data when click an element in left menu 
+    |-----------------------------------------------
+    |
+    | 
+    | 
+    | 
+    |
+    |
+    */
+    ipcRenderer.on('response-data-in-menu-history', (event, apiRequested) => {
+        console.log(apiRequested);
+    })
 
     
-}
+    function fillWrongData(error) {
+        var errorEle = document.getElementById('error-log-response');
+        errorEle.style.display = 'block';
+        var errorContentEle = document.getElementById('error-content');
+        errorContentEle.innerText = error;
+        var titleResponse = document.getElementById('title-response');
+        var gifPreload = document.getElementsByClassName('gif-pre-load')[0];
+        titleResponse.style.display = 'block';
+        gifPreload.style.display = 'none';
+        var preloadResponse = document.getElementsByClassName('pre-load-response')[0];
+        preloadResponse.style.display = 'none';
+
+        
+    }
 
 function fillWrongDatav2(method, requestTime, error) {
     /**
