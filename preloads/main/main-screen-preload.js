@@ -237,7 +237,29 @@ window.addEventListener('DOMContentLoaded', () => {
      * GET all request data by api-data-id when click li element
      * 
      */
-    window.onclick = function() {
+    // window.onclick = function() {
+    //     var $ = function (selector) {
+    //         return document.querySelectorAll(selector);
+    //     };
+    //     var nodes = $('[data-api-id]');
+    //     nodes.forEach(function(li, index) {
+    //         if (li.getAttribute('click') !== 'true') {
+    //             li.addEventListener('click', function() {
+    //                 var apiId = this.getAttribute('data-api-id');
+    //                 console.log(this.getAttribute('data-api-id'));
+    //                 // TODO: get all request data for this ID 
+    //                 ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+    //                 // End TODO
+    //             });
+    //         }
+    //     });
+    //     nodes.forEach(function(li, index) {
+    //         if (li.getAttribute('click') === 'true') {
+    //             li.removeEventListener('click');
+    //         }
+    //     });
+    // }
+    docReady(() => {
         var $ = function (selector) {
             return document.querySelectorAll(selector);
         };
@@ -258,7 +280,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 li.removeEventListener('click');
             }
         });
-    }
+    });
 });
     /*
     |-----------------------------------------------
@@ -562,6 +584,28 @@ function fillResponseData(responseData) {
             textareaPretty.value = "";
             textareaRaw.value = "";
         }
+        docReady(() => {
+            var $ = function (selector) {
+                return document.querySelectorAll(selector);
+            };
+            var nodes = $('[data-api-id]');
+            nodes.forEach(function(li, index) {
+                if (li.getAttribute('click') !== 'true') {
+                    li.addEventListener('click', function() {
+                        var apiId = this.getAttribute('data-api-id');
+                        console.log(this.getAttribute('data-api-id'));
+                        // TODO: get all request data for this ID 
+                        ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                        // End TODO
+                    });
+                }
+            });
+            nodes.forEach(function(li, index) {
+                if (li.getAttribute('click') === 'true') {
+                    li.removeEventListener('click');
+                }
+            });
+        });
     }
     else {
         var errorEle = document.getElementById('error-log-response');
@@ -569,4 +613,35 @@ function fillResponseData(responseData) {
         var errorContentEle = document.getElementById('error-content');
         errorContentEle.innerText = bodyResponse;
     }
+}
+
+function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+    }
+}
+
+function addClickEventListener() {
+    var $ = function (selector) {
+        return document.querySelectorAll(selector);
+    };
+    var nodes = $('[data-api-id]');
+    nodes.forEach(function(li, index) {
+        if (li.getAttribute('click') !== 'true') {
+            li.addEventListener('click', function() {
+                var apiId = this.getAttribute('data-api-id');
+                console.log(this.getAttribute('data-api-id'));
+                // TODO: get all request data for this ID 
+                ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                // End TODO
+            });
+        }
+    });
+    nodes.forEach(function(li, index) {
+        if (li.getAttribute('click') === 'true') {
+            li.removeEventListener('click');
+        }
+    });
 }
