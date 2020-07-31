@@ -231,7 +231,24 @@ window.addEventListener('DOMContentLoaded', () => {
         // var dataResponse = null;
         // var errorLog = document.getElementById('error-log');
         ipcRenderer.send('send-api-request', (event, api))
-    })
+    });
+
+    /**
+     * GET all request data by api-data-id when click li element
+     * 
+     */
+    window.onload = function() {
+        var $ = function (selector) {
+            return document.querySelectorAll(selector);
+        };
+        $('[data-api-id]').forEach(function(li, index) {
+            li.addEventListener('click', function() {
+                var apiId = this.getAttribute('data-api-id');
+                console.log(this.getAttribute('data-api-id'));
+                // TODO: get all request data for this ID 
+            });
+        });
+    }
 });
 
 ipcRenderer.on('response-api-data', (event, dataResponse) => {
@@ -342,7 +359,7 @@ function fillResponseData(responseData) {
     var isFatalError = responseData.isFatalError;
     if (!isFatalError) {
 
-        ipcRenderer.send('set-executed-api-to-local-store', (event, dataResponse.stockOriginRequest))
+        ipcRenderer.send('set-executed-api-to-local-store', (event, responseData.stockOriginRequest))
 
         /**
          * Set hide error content
@@ -370,10 +387,24 @@ function fillResponseData(responseData) {
         var textareaPretty = document.getElementById('textarea-pretty');
         var textareaRaw = document.getElementById('textarea-raw');
         var preview = document.getElementById('load-preview');
-        var cookies = document.getElementById('load-cookies');
+        var loadCookies = document.getElementById('load-cookies');
+        var cookies = document.getElementById('cookies');
         var tbodyResponseTable= document.getElementById('tbody-response-table');
+        var trChild = null;
+        if (tbodyResponseTable.childNodes.length > 3) {
+            while(tbodyResponseTable.hasChildNodes())
+            {
+                if (tbodyResponseTable.childNodes.length < 2) break;
+                tbodyResponseTable.removeChild(tbodyResponseTable.firstChild);
+            }
+            trChild = tbodyResponseTable.childNodes[0];
+        } else {
+            trChild = tbodyResponseTable.childNodes[1];
+        }
+        
         var responseHeader = document.getElementById('response-header');
-        var trChild = tbodyResponseTable.childNodes[1];
+        loadCookies.style.display = "block";
+        cookies.style.display = 'none';
         var status = "";
         switch (statusCode) {
             case 200:
@@ -449,10 +480,33 @@ function fillResponseData(responseData) {
         if (headersResponse != undefined) {
             responseHeader.style.display = "block";
             Object.keys(headersResponse).forEach(key => {
-            trChild.childNodes[3].innerText = key;
-            trChild.childNodes[5].innerText = headersResponse[key];
-            tbodyResponseTable.appendChild(trChild);
-            trChild = trChild.cloneNode(true);
+                if (String(key) == 'set-cookie') {
+                    loadCookies.style.display = 'none';
+                    cookies.style.display = 'block';
+                    var tbodyCookies = document.getElementById('tbody-cookies');
+                    console.log(tbodyCookies);
+                    var trChildCookie = tbodyCookies.childNodes[0];
+                    var cookiesValue = headersResponse[key];
+                    if (cookiesValue.length > 0) {
+                        cookiesValue.forEach(function(cookie, index) {
+                            var lsCookie = cookie.split(';');
+                            if (lsCookie.length > 0) {
+                                var name = "";
+                                lsCookie.forEach(function(pairValue, index) {
+                                    var lsPair = pairValue.split('=');
+                                    if (index == 0) name = lsPair[0];
+                                    trChildCookie.childNodes[index+1].innerText = lsPair[1];
+                                });
+                                trChildCookie.childNodes[0].innerText = name;
+                            }
+                        });
+                    }
+                } else {
+                    trChild.childNodes[3].innerText = key;
+                    trChild.childNodes[5].innerText = headersResponse[key];
+                    tbodyResponseTable.appendChild(trChild);
+                    trChild = trChild.cloneNode(true);
+                }
             });
         }
         else {

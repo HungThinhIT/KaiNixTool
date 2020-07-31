@@ -415,3 +415,15 @@ textarea::-webkit-scrollbar-thumb {
   font-weight: 600;
   background-color: antiquewhite;
 }
+
+.text-darkgray > tr > th{
+  color: #333;
+}
+
+.text-grey > tr > td {
+  color: grey;
+}
+
+.cookies {
+  display: none;
+}
