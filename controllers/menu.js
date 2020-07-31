@@ -92,3 +92,29 @@ ipcMain.on('save-state-category-history-api', async (event, { date, isOpen }) =>
     })
     store.set('api-history-menu.history', historyApiMenu.history)
 })
+
+/*
+|-----------------------------------------------
+| Find data through api id from local-store
+|-----------------------------------------------
+| 
+| Find the data from local-store by api-menu
+| and return it
+| return object if it's exist
+| return null if it's not exist
+| 
+*/
+
+ipcMain.on('find-data-via-menu-id', (event, apiId) => {
+    const menuData = store.get('api-history-menu.history')
+    const listApi = []
+    const apiInHistory = null
+    for (let i = 0; i < menuData.length; i++) {
+        const element = menuData[i];
+        listApi.push(...element.apiEndPoint)
+    }
+    listApi.forEach(e => {
+        if(e.id.localeCompare(`${apiId}`) == 0 )
+            event.sender.send('response-data-in-menu-history',(event, e))
+    });
+})
