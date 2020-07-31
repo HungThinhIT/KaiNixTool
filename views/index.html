@@ -293,7 +293,7 @@
                           <div class="col-3 text-center authorization-tabbed-left">
                             <select name="authorize-type" id="authorize-type" onchange="setChangeType()">
                               <option value="none">None</option>
-                              <option value="oauth-2">OAuth 2</option>
+                              <option value="oauth-2">Bearer</option>
                             </select>
                           </div>
                           <div class="col-9 authorization-tabbed-right" id="authorization-content-right">
@@ -430,6 +430,21 @@
                   </div>
                   <div class="clear"></div>
                   <div class="content-response-child">
+                    <div id="error-log-response" class="error-log-response justify-content-center">
+                      <div class="serend-name text-center">
+                        KaiNix
+                      </div>
+                      <div class="serend-img text-center">
+                        <img src="../resources/custom/imgs/114-1140560_the-birth-of-the-phoenix-png-download-phoenix (1).png" width="70" alt="">
+                      </div>
+                      <div class="serend-content text-center">
+                        Could not send request
+                        <br/>
+                        <span id="error-content">
+                          this is error content
+                        </span>
+                      </div>
+                    </div>
                     <div class="pre-load-response" id="pre-load-response">
                       <h5 id="title-response">Response</h5>
                       <div class="col-12 gif-pre-load text-center">

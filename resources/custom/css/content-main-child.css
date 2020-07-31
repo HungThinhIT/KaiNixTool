@@ -385,3 +385,33 @@ textarea::-webkit-scrollbar-thumb {
   border: none;
 }
 
+.content-response-child .error-log-response {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  z-index: 1001;
+  background: #fff;
+  display: none;
+}
+
+.content-response-child .error-log-response div.serend-name,
+.content-response-child .error-log-response div.serend-content {
+  padding: 10px;
+  color: #777;
+}
+
+.content-response-child .error-log-response div.serend-name {
+  font-size: 1.2rem;
+}
+
+#error-content {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 5px 16px;
+  border-radius: 50px;
+  border: none;
+  font-weight: 600;
+  background-color: antiquewhite;
+}
