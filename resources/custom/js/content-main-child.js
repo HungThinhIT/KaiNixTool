@@ -25,10 +25,8 @@ var tabs = [
 // Create the toggle function
 var toggleTab = function(element) {
   var parent = element.parentNode;
-  
   // Do things on click
   $(element)[0].addEventListener('click', function(){
-    
     
     // Check if the clicked tab contains the class of the 1 or 2
     if(this.classList.contains('tabbed-section__selector-tab-1')) {
