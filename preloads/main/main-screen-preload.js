@@ -326,9 +326,174 @@ window.addEventListener('DOMContentLoaded', () => {
     */
     ipcRenderer.on('response-data-in-menu-history', (event, apiRequested) => {
         console.log(apiRequested);
+        addTabItem(apiRequested);
     })
 
+    /**
+     * 
+     * @param {*} apiRequested
+     * 
+     * Check exist and add new Tab Item 
+     */
+    function addTabItem(apiRequested) {
+        var id = apiRequested.id;
+        var name = apiRequested.url;
+        var tab = document.getElementById('tab-tab-item');
+        var tabItem = tab.childNodes[0].cloneNode(true);
+        var exist = false;
+        tab.childNodes.forEach(function(item, index) {
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+            }
+            if (item.getAttribute('data-api-id') == id) exist = true;
+        })
+        if (!exist) {
+            if (!tabItem.classList.contains('active')) {
+                tabItem.classList.add('active');
+            }
+            tabItem.innerHTML = '<span class="icon icon-cancel icon-close-tab"></span>' + name;
+            tabItem.setAttribute("data-api-id", id);
+            tabItem.addEventListener('click', function() {
+                var apiId = this.getAttribute('data-api-id');
+                console.log(this.getAttribute('data-api-id'));
+                // TODO: get all request data for this ID 
+                ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                // End TODO
+            });
+            tab.appendChild(tabItem);
+            fillRequest(apiRequested);
+        }
+        else {
+            fillRequest(apiRequested);
+        }
+    }
+
+    function fillRequest(request) {
+        var methodOption = document.getElementById('method-request');
+        var path = document.getElementById('path');
+        var tbodyParam = document.getElementById('tbody-params')
+        var authorizeType = document.getElementById('authorize-type')
+        var tbodyHeader = document.getElementById('tbody-headers')
+        var tbodyForms = document.getElementById('tbody-forms')
+        var authToken = document.getElementById('auth-token')
+        tbodyForms.childNodes.forEach(function(item, index) {
+            if (item.nodeName === '#text') tbodyForms.removeChild(item);
+        })
+        tbodyHeader.childNodes.forEach(function(item, index) {
+            if (item.nodeName === '#text') tbodyHeader.removeChild(item);
+        })
+        tbodyParam.childNodes.forEach(function(item, index) {
+            if (item.nodeName === '#text') tbodyParam.removeChild(item);
+        })
+        console.log(authorizeType)
+        console.log(path)
+        console.log(methodOption)
+
+        /**
+         * Check and fill data for request
+         */
+        var url = request.url
+        var method = request.method
+        var headers = request.headers
+        var body = request.body
+        var authen = request.authenticate
+
+        path.value = url
+
+        methodOption.childNodes.forEach(function(item, index) {
+            if (item.value === method) item.setAttribute('selected', 'selected')
+        })
+
+        if (authen.isAuthen == true) {
+            authToken.value = authen.token
+            // authorizeType.value = authen.type
+            authorizeType.childNodes.forEach(function(item, index) {
+                if(item.value === authen.type) item.setAttribute('selected', 'selected')
+            })
+        }
+        
+        if (!isEmpty(headers)) {
+            tbodyHeader.deleteRow(tbodyHeader.rows.length - 1)
+            var trChild = tbodyHeader.childNodes[0];
+            console.log(trChild.childNodes[1])
+            var count = 0;
+            Object.keys(headers).forEach(key => {
+                if (count > 0) {
+                    trChild = tbodyHeader.childNodes[0].cloneNode(true);
+                    trChild.childNodes[1].childNodes[1].selected = headers[key].isCheck;
+                    trChild.childNodes[3].childNodes[1].value = headers[key].key;
+                    trChild.childNodes[5].childNodes[1].value = headers[key].value;
+                    trChild.childNodes[7].childNodes[1].value = headers[key].description;
+                    tbodyHeader.appendChild(trChild);
+                }
+                else {
+                    trChild.childNodes[1].childNodes[1].selected = headers[key].isCheck;
+                    trChild.childNodes[3].childNodes[1].value = headers[key].key;
+                    trChild.childNodes[5].childNodes[1].value = headers[key].value;
+                    trChild.childNodes[7].childNodes[1].value = headers[key].description;
+                }
+                
+                
+                count+=1;
+            });
+            trChild = tbodyHeader.childNodes[0].cloneNode(true);
+            trChild.childNodes[1].childNodes[1].selected = false;
+            trChild.childNodes[3].childNodes[1].value = "";
+            trChild.childNodes[5].childNodes[1].value = "";
+            trChild.childNodes[7].childNodes[1].value = "";
+            trChild.setAttribute('id', 'last-row-headers');
+            tbodyHeader.appendChild(trChild);
+        }
+
+        if (!isEmpty(body)) {
+            tbodyForms.deleteRow(tbodyForms.rows.length - 1)
+            var trChild = tbodyForms.childNodes[0];
+            console.log(trChild.childNodes[1])
+            var count = 0;
+            Object.keys(headers).forEach(key => {
+                if (count > 0) {
+                    trChild = tbodyForms.childNodes[0].cloneNode(true);
+                    trChild.childNodes[1].childNodes[1].selected = headers[key].isCheck;
+                    trChild.childNodes[3].childNodes[1].value = headers[key].key;
+                    trChild.childNodes[5].childNodes[1].value = headers[key].value;
+                    trChild.childNodes[7].childNodes[1].value = headers[key].description;
+                    tbodyForms.appendChild(trChild);
+                }
+                else {
+                    trChild.childNodes[1].childNodes[1].selected = headers[key].isCheck;
+                    trChild.childNodes[3].childNodes[1].value = headers[key].key;
+                    trChild.childNodes[5].childNodes[1].value = headers[key].value;
+                    trChild.childNodes[7].childNodes[1].value = headers[key].description;
+                }
+                
+                
+                count+=1;
+            });
+            trChild = tbodyForms.childNodes[0].cloneNode(true);
+            trChild.childNodes[1].childNodes[1].selected = false;
+            trChild.childNodes[3].childNodes[1].value = "";
+            trChild.childNodes[5].childNodes[1].value = "";
+            trChild.childNodes[7].childNodes[1].value = "";
+            trChild.setAttribute('id', 'last-row-headers');
+            tbodyForms.appendChild(trChild);
+        }
+
+        // TODO: fill Param
+
+        var preloadResponse = document.getElementById('pre-load-response')
+        var errorLogResponse = document.getElementById('error-log-response')
+        errorLogResponse.style.display = 'none';
+        preloadResponse.style.display = 'block';
+    }
     
+    function isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
     function fillWrongData(error) {
         var errorEle = document.getElementById('error-log-response');
         errorEle.style.display = 'block';
@@ -340,8 +505,6 @@ window.addEventListener('DOMContentLoaded', () => {
         gifPreload.style.display = 'none';
         var preloadResponse = document.getElementsByClassName('pre-load-response')[0];
         preloadResponse.style.display = 'none';
-
-        
     }
 
 function fillWrongDatav2(method, requestTime, error) {
