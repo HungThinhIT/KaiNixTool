@@ -387,7 +387,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         console.log(authorizeType)
         console.log(path)
-        console.log(methodOption)
+        console.log(authToken)
 
         /**
          * Check and fill data for request
@@ -405,13 +405,23 @@ window.addEventListener('DOMContentLoaded', () => {
         })
 
         if (authen.isAuthen == true) {
-            authToken.value = authen.token
-            // authorizeType.value = authen.type
             authorizeType.childNodes.forEach(function(item, index) {
                 if(item.value === authen.type) item.setAttribute('selected', 'selected')
             })
+            var authContent = document.getElementById("authorization-content-right");
+  
+            authContent.innerHTML = "";
+            var txt = '<div class="col-12 d-flex">' +
+                                '<div class="col-3">Bearer Token</div>' +
+                                '<div class="col-9 ">' +
+                                '<input class="full-width" value="'+ authen.token +'" type="text" name="auth-token"' + 'id="auth-token">' +
+                                '</div>' +
+                            '</div>';
+            authContent.innerHTML = txt;
+            // authorizeType.value = authen.type
+            
         }
-        
+
         if (!isEmpty(headers)) {
             tbodyHeader.deleteRow(tbodyHeader.rows.length - 1)
             var trChild = tbodyHeader.childNodes[0];
@@ -478,7 +488,51 @@ window.addEventListener('DOMContentLoaded', () => {
             tbodyForms.appendChild(trChild);
         }
 
-        // TODO: fill Param
+        if (url.includes('?')) {
+            var ls = url.split('?')
+            if (ls[1].length > 0) {
+                if (ls[1].includes('&')) {
+                    var pairLs = ls[1].split('&')
+                    if (pairLs.length > 1) {
+                        tbodyParam.deleteRow(tbodyParam.rows.length - 1)
+                        pairLs.forEach(function(item, index) {
+                            if (item.includes('=')) {
+                                var pair = item.split('=');
+                                var trParam = tbodyParam.childNodes[0].cloneNode(true);
+                                trParam.childNodes[1].childNodes[1].checked= true;
+                                trParam.childNodes[3].childNodes[1].value = pair[0];
+                                trParam.childNodes[5].childNodes[1].value = pair[1];
+                                tbodyParam.appendChild(trParam);
+                            }
+                        })
+                        var trParam = tbodyParam.childNodes[0].cloneNode(true);
+                        trParam.childNodes[1].childNodes[1].checked= false;
+                        trParam.childNodes[3].childNodes[1].value = "";
+                        trParam.childNodes[5].childNodes[1].value = "";
+                        trParam.setAttribute('id', 'last-row-params');
+                        tbodyParam.appendChild(trParam);
+                    }
+                    else {
+                        if (pairLs[0].includes('=')) {
+                            var pair = pairLs[0].split('=');
+                            var trParam = tbodyParam.childNodes[0];
+                            trParam.childNodes[1].childNodes[1].checked= true;
+                            trParam.childNodes[3].childNodes[1].value = pair[0];
+                            trParam.childNodes[5].childNodes[1].value = pair[1];
+                        }
+                    }
+                }
+                else {
+                    if (ls[1].includes('=')) {
+                        var pair = ls[1].split('=');
+                        var trParam = tbodyParam.childNodes[0];
+                        trParam.childNodes[1].childNodes[1].checked= true;
+                        trParam.childNodes[3].childNodes[1].value = pair[0];
+                        trParam.childNodes[5].childNodes[1].value = pair[1];
+                    }
+                }
+            }
+        }
 
         var preloadResponse = document.getElementById('pre-load-response')
         var errorLogResponse = document.getElementById('error-log-response')
