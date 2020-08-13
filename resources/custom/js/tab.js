@@ -121,21 +121,23 @@
                 group.addTab({});
             }
         }
-        // titleResponse.style.display = 'block';
-        // gifPreload.style.display = 'none';
     });
     window.addEventListener("click", function (event) {
         var isTabGroup = hasParentClass(event.target, "tab-group");
-        var group = isTabGroup.parents[isTabGroup.parents.length - 1];
-        if (isTabGroup.success) {
-            var isAddBtn = hasParentClass(event.target, "icon-close-tab");
-            if (isAddBtn.success) {
-                var isItem = hasParentClass(event.target, "tab-item");
-                group.closeTab(isItem.parents[isItem.parents.length - 1], {});
+        var iconClose = document.getElementsByClassName('icon-close-tab');
+        if (iconClose) {
+            if (iconClose.length > 1) {
+                var group = isTabGroup.parents[isTabGroup.parents.length - 1];
+                if (isTabGroup.success) {
+                    var isAddBtn = hasParentClass(event.target, "icon-close-tab");
+                    if (isAddBtn.success) {
+                        var isItem = hasParentClass(event.target, "tab-item");
+                        group.closeTab(isItem.parents[isItem.parents.length - 1], {});
+                    }
+                }
             }
+            
         }
-        // titleResponse.style.display = 'block';
-        // gifPreload.style.display = 'none';
     });
     HTMLDivElement.prototype.activateItem = function (item) {
         var isTabGroup = hasParentClass(this, "tab-group");
