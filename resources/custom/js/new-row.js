@@ -88,11 +88,7 @@ function changesParams(input) {
 
   var trParent = input.parentNode.parentNode;
   var newTrParent = trParent.cloneNode(true);
-  console.log(newTrParent);
   var newTdParent = newTrParent.childNodes;
-  console.log(newTdParent[1].childNodes[1]);
-  console.log(newTdParent[3].childNodes[1]);
-  console.log(newTdParent[5].childNodes[1]);
   newTdParent[1].childNodes[1].value = "";
   newTdParent[3].childNodes[1].value = "";
   newTdParent[5].childNodes[1].value = "";

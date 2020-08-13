@@ -3,7 +3,10 @@ const dateFormat = require('dateformat');
 
 
 window.addEventListener('DOMContentLoaded', () => {
-
+    var tab = document.getElementById('tab-tab-item');
+    var tabOld = tab.childNodes[0];
+    var pane = document.getElementById('pcntm');
+    var oldPane = pane.cloneNode(true);
     /*
     |-----------------------------------------------
     | DOM Data from FE and send it via IPC
@@ -270,7 +273,12 @@ window.addEventListener('DOMContentLoaded', () => {
                     var apiId = this.getAttribute('data-api-id');
                     console.log(this.getAttribute('data-api-id'));
                     // TODO: get all request data for this ID 
-                    ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                    if (apiId) {
+                        ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                    }
+                    else {
+                        pane.innerHTML = oldPane.innerHTML;
+                    }
                     // End TODO
                 });
             }
@@ -335,11 +343,12 @@ window.addEventListener('DOMContentLoaded', () => {
      * 
      * Check exist and add new Tab Item 
      */
+    
     function addTabItem(apiRequested) {
         var id = apiRequested.id;
         var name = apiRequested.url;
         var tab = document.getElementById('tab-tab-item');
-        var tabItem = tab.childNodes[0].cloneNode(true);
+        var tabItem = tabOld.cloneNode(true);
         var exist = false;
         tab.childNodes.forEach(function(item, index) {
             if (item.classList.contains('active')) {
@@ -351,7 +360,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if (!tabItem.classList.contains('active')) {
                 tabItem.classList.add('active');
             }
-            tabItem.innerHTML = '<span class="icon icon-cancel icon-close-tab"></span>' + name;
+            tabItem.innerHTML = '<span class="icon icon-cancel icon-close-tab" data-api-id=""></span>' + name;
             tabItem.setAttribute("data-api-id", id);
             tabItem.addEventListener('click', function() {
                 var apiId = this.getAttribute('data-api-id');
@@ -364,6 +373,11 @@ window.addEventListener('DOMContentLoaded', () => {
             fillRequest(apiRequested);
         }
         else {
+            tab.childNodes.forEach((tabItem, index) => {
+                if (tabItem.getAttribute('data-api-id') === id) {
+                    tabItem.classList.add('active');
+                }
+            })
             fillRequest(apiRequested);
         }
     }

@@ -58,6 +58,7 @@
       <div class="window-content">
         <div class="pane-group">
           <div class="pane pane-one-fourth sidebar">
+            <button class="ml-2 mb-1" onclick="newRequest()">New Request</button>
             <nav class="nav-group">
               <ul class="list-group">
                 <li
@@ -162,10 +163,10 @@
           </div>
 
           <div class="pane pane-main">
-            <div id="tab-tab-item" class="tab-group tab-group-api"><div class="tab-item active"><span class="icon icon-cancel icon-close-tab"></span>Untitle Request</div></div>
+            <div id="tab-tab-item" class="tab-group tab-group-api"><div class="tab-item active" data-api-id=""><span class="icon icon-cancel icon-close-tab"></span>Untitle Request</div></div>
 
             <!-- Main Content   -->
-            <div class="pane">
+            <div class="pane" id="pcntm">
               <div class="content-main">
                 <div class="content-main-header">
                   <div class="content-main-header-box">
@@ -392,7 +393,7 @@
                           <div class="tabbed-section-8 col-12 hidden">
                             <div class="col-8 raw-data-form d-flex">
                               <textarea readonlycols="30" rows="8" cols="3" class="rownr" value="1"></textarea>
-                              <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                              <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="raw" id="" nowrap="nowrap" wrap="off"
                             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onscroll="scroll_changed(this)"></textarea>
                             </div>
                             <div class="clear"></div>
@@ -403,7 +404,7 @@
                       <div class="tabbed tabbed-section-5 hidden">
                         <div class="col-8 tab-pre-scripts d-flex">
                           <textarea readonlycols="30" rows="10" cols="3" class="rownr" value="1"></textarea>
-                          <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="" id="" nowrap="nowrap" wrap="off"
+                          <textarea class="txt" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="pre-scripts" id="pre-scripts" nowrap="nowrap" wrap="off"
                             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="input_changed(this)" onscroll="scroll_changed(this)"></textarea>
                         </div>
                         <div class="clear"></div>
