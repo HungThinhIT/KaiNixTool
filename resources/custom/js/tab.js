@@ -1,4 +1,5 @@
 (function () {
+    console.log('tab')
     var currTabGroup = null;
     var titleResponse = document.getElementById('title-response');
     var gifPreload = document.getElementsByClassName('gif-pre-load')[0];

@@ -2,11 +2,12 @@ const ipcRenderer = require('electron').ipcRenderer;
 const dateFormat = require('dateformat');
 
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('click', () => {
+    
     var tab = document.getElementById('tab-tab-item');
-    var tabOld = tab.childNodes[0];
+    const tabOld = tab.childNodes[0];
     var pane = document.getElementById('pcntm');
-    var oldPane = pane.cloneNode(true);
+    const oldPane = pane.cloneNode(true);
     /*
     |-----------------------------------------------
     | DOM Data from FE and send it via IPC
@@ -271,17 +272,28 @@ window.addEventListener('DOMContentLoaded', () => {
             if (li.getAttribute('click') !== 'true') {
                 li.addEventListener('click', function() {
                     var apiId = this.getAttribute('data-api-id');
-                    console.log(this.getAttribute('data-api-id'));
+                    // console.log(this.getAttribute('data-api-id'));
                     // TODO: get all request data for this ID 
                     if (apiId) {
                         ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                        srcs.forEach((src, index) => {
+                            load_js(src);
+                        });
                     }
                     else {
                         pane.innerHTML = oldPane.innerHTML;
+                        srcs.forEach((src, index) => {
+                            load_js(src);
+                        });
                     }
+                    
                     // End TODO
                 });
             }
+        });
+        
+        srcs.forEach((src, index) => {
+            load_js(src);
         });
         nodes.forEach(function(li, index) {
             if (li.getAttribute('click') === 'true') {
@@ -290,6 +302,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
     /*
     |-----------------------------------------------
     | IPC ON Response api requested and fill to UI
@@ -335,6 +348,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.on('response-data-in-menu-history', (event, apiRequested) => {
         console.log(apiRequested);
         addTabItem(apiRequested);
+        
     })
 
     /**
@@ -347,42 +361,81 @@ window.addEventListener('DOMContentLoaded', () => {
     function addTabItem(apiRequested) {
         var id = apiRequested.id;
         var name = apiRequested.url;
-        var tab = document.getElementById('tab-tab-item');
+        var tab = $('#tab-tab-item');
+        // console.log(tab)
         var tabItem = tabOld.cloneNode(true);
         var exist = false;
-        tab.childNodes.forEach(function(item, index) {
-            if (item.classList.contains('active')) {
-                item.classList.remove('active');
+        
+        if (tab[0].childNodes.length > 1) {
+            tab[0].childNodes.forEach(function(item, index) {
+                console.log(item.getAttribute('data-api-id'))
+                // console.log(id)
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+                if (item.getAttribute('data-api-id') === id) {
+                    exist = true;
+                }
+                // console.log(item)
+                fillRequest(apiRequested);
+            })
+        } else {
+            if (tab[0].childNodes.length === 1) {
+                var item = tab[0].childNodes[0];
+                // console.log(item)
+                // console.log(id)
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+                if (item.getAttribute('data-api-id') === id) {
+                    exist = true;
+                }
+                // console.log(item)
+                fillRequest(apiRequested);
             }
-            if (item.getAttribute('data-api-id') == id) exist = true;
-        })
+        }
+        // console.log(exist);
+        
         if (!exist) {
             if (!tabItem.classList.contains('active')) {
                 tabItem.classList.add('active');
             }
-            tabItem.innerHTML = '<span class="icon icon-cancel icon-close-tab" data-api-id=""></span>' + name;
+            tabItem.innerHTML = '<span class="icon icon-cancel icon-close-tab"></span>' + name;
             tabItem.setAttribute("data-api-id", id);
             tabItem.addEventListener('click', function() {
                 var apiId = this.getAttribute('data-api-id');
-                console.log(this.getAttribute('data-api-id'));
+                // console.log(this.getAttribute('data-api-id'));
+                fillRequest(apiRequested);
+                srcs.forEach((src, index) => {
+                    load_js(src);
+                });
                 // TODO: get all request data for this ID 
-                ipcRenderer.send('find-data-via-menu-id', (event, apiId))
                 // End TODO
             });
-            tab.appendChild(tabItem);
+            // console.log(apiRequested)
+            tab[0].appendChild(tabItem);
             fillRequest(apiRequested);
+            srcs.forEach((src, index) => {
+                load_js(src);
+            });
         }
         else {
-            tab.childNodes.forEach((tabItem, index) => {
+            tab[0].childNodes.forEach((tabItem, index) => {
                 if (tabItem.getAttribute('data-api-id') === id) {
                     tabItem.classList.add('active');
                 }
             })
             fillRequest(apiRequested);
+            srcs.forEach((src, index) => {
+                load_js(src);
+            });
         }
+        
     }
 
     function fillRequest(request) {
+        pane.innerHTML = oldPane.innerHTML;
+        // console.log(request)
         var methodOption = document.getElementById('method-request');
         var path = document.getElementById('path');
         var tbodyParam = document.getElementById('tbody-params')
@@ -399,9 +452,9 @@ window.addEventListener('DOMContentLoaded', () => {
         tbodyParam.childNodes.forEach(function(item, index) {
             if (item.nodeName === '#text') tbodyParam.removeChild(item);
         })
-        console.log(authorizeType)
-        console.log(path)
-        console.log(authToken)
+        // console.log(authorizeType)
+        // console.log(path)
+        // console.log(authToken)
 
         /**
          * Check and fill data for request
@@ -434,6 +487,12 @@ window.addEventListener('DOMContentLoaded', () => {
             authContent.innerHTML = txt;
             // authorizeType.value = authen.type
             
+        } else {
+            authorizeType.childNodes.forEach(function(item, index) {
+                if(item.value === authen.type) item.setAttribute('selected', 'selected')
+            })
+            var authContent = document.getElementById("authorization-content-right");
+            authContent.innerHTML = null;
         }
 
         if (!isEmpty(headers)) {
@@ -456,8 +515,6 @@ window.addEventListener('DOMContentLoaded', () => {
                     trChild.childNodes[5].childNodes[1].value = headers[key].value;
                     trChild.childNodes[7].childNodes[1].value = headers[key].description;
                 }
-                
-                
                 count+=1;
             });
             trChild = tbodyHeader.childNodes[0].cloneNode(true);
@@ -467,6 +524,9 @@ window.addEventListener('DOMContentLoaded', () => {
             trChild.childNodes[7].childNodes[1].value = "";
             trChild.setAttribute('id', 'last-row-headers');
             tbodyHeader.appendChild(trChild);
+        }
+        else {
+
         }
 
         if (!isEmpty(body)) {
@@ -500,6 +560,9 @@ window.addEventListener('DOMContentLoaded', () => {
             trChild.childNodes[7].childNodes[1].value = "";
             trChild.setAttribute('id', 'last-row-headers');
             tbodyForms.appendChild(trChild);
+        }
+        else {
+
         }
 
         if (url.includes('?')) {
@@ -546,6 +609,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+        } else {
+
         }
 
         var preloadResponse = document.getElementById('pre-load-response')
@@ -875,4 +940,32 @@ function addClickEventListener() {
             li.removeEventListener('click');
         }
     });
+}
+
+var $ = function (selector) {
+    return document.querySelectorAll(selector);
+};
+
+var srcs = [
+    "../resources/custom/js/content-main-child.js",
+    "../resources/custom/js/preloadDashboard.js",
+    "../resources/custom/js/frame-list.js"
+]
+
+function load_js(src)
+{
+    var reload = document.getElementById('reload-js');
+    var scriptTemp = $('script[src="'+src+'"]')
+    // console.log(scriptTemp);
+    if (reload.childNodes.length > 0) {
+        reload.childNodes.forEach((child, index) => {
+            var srcSub = src.substr(2, src.length - 2);
+            if (String(child.src).includes(srcSub)) {
+                reload.removeChild(child);
+            }
+        })
+    }
+    var script= document.createElement('script');
+    script.src= src;
+    reload.appendChild(script);
 }
