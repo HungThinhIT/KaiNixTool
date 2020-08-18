@@ -4,7 +4,10 @@
   "description": "This is an open source tool for testing REST API, power on Electronjs.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=build/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"KaiNix Tool\"",
+    "package-linux" : "electron-packager . --overwrite --platform=linux --arch=x64 --icon=build/icons/png/icon.png --prune=true --out=release-builds"
   },
   "repository": "https://github.com/HungThinh0710/KaiNixTool",
   "keywords": [

@@ -38,23 +38,6 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // setOldUserData(historyMenuApi);
   
-  
-  /*
-  |-----------------------------------------------
-  | Request the Api
-  |-----------------------------------------------
-  |
-  | Collect all data via DOM and execute the api 
-  | All data will forward to request.js for 
-  | handle and return result.
-  |
-  |
-  */
-  document.querySelector('#btnTestAPI').addEventListener('click', async () => { //NOT YET    
-
-    
-    
-  })
 })  
 
 //Check State of Category Menu (Open or Close)
