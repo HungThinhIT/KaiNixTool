@@ -140,16 +140,32 @@ ipcMain.on('save-state-category-history-api', async (event, { date, isOpen }) =>
 | 
 */
 
-ipcMain.on('find-data-via-menu-id', (event, apiId) => {
-    const menuData = store.get('api-history-menu.history')
-    const listApi = []
-    const apiInHistory = null
-    for (let i = 0; i < menuData.length; i++) {
-        const element = menuData[i];
-        listApi.push(...element.apiEndPoint)
+ipcMain.on('find-data-via-menu-id', (event, [apiId, type]) => {
+    if(type === 'history'){
+        const menuData = store.get('api-history-menu.history')
+        const listApi = []
+        const apiInHistory = null
+        for (let i = 0; i < menuData.length; i++) {
+            const element = menuData[i];
+            listApi.push(...element.apiEndPoint)
+        }
+        listApi.forEach(e => {
+            if(e.id.localeCompare(`${apiId}`) == 0 )
+                event.sender.send('response-data-in-menu-history',(event, e))
+        });
     }
-    listApi.forEach(e => {
-        if(e.id.localeCompare(`${apiId}`) == 0 )
-            event.sender.send('response-data-in-menu-history',(event, e))
-    });
+    if(type === 'collection'){
+        const menuData = store.get('api-history-menu.collection')
+        const listApi = []
+        const apiInHistory = null
+        for (let i = 0; i < menuData.length; i++) {
+            const element = menuData[i];
+            listApi.push(...element.apiEndPoint)
+        }
+        listApi.forEach(e => {
+            if(e.id.localeCompare(`${apiId}`) == 0 )
+                event.sender.send('response-data-in-menu-history',(event, e))
+        });
+    }
 })
+

@@ -279,7 +279,32 @@ window.addEventListener('DOMContentLoaded', () => {
                     // console.log(this.getAttribute('data-api-id'));
                     // TODO: get all request data for this ID 
                     if (apiId) {
-                        ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                        ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'history']))
+                        srcs.forEach((src, index) => {
+                            load_js(src);
+                        });
+                    }
+                    else {
+                        pane.innerHTML = oldPane.innerHTML;
+                        srcs.forEach((src, index) => {
+                            load_js(src);
+                        });
+                    }
+                    
+                    // End TODO
+                });
+            }
+        });
+
+        var nodesCollection = $('[data-collection-id]');
+        nodesCollection.forEach(function(li, index) {
+            if (li.getAttribute('click') !== 'true') {
+                li.addEventListener('click', function() {
+                    var apiId = this.getAttribute('data-collection-id');
+                    // console.log(this.getAttribute('data-api-id'));
+                    // TODO: get all request data for this ID 
+                    if (apiId) {
+                        ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'collection']))
                         srcs.forEach((src, index) => {
                             load_js(src);
                         });
@@ -300,6 +325,11 @@ window.addEventListener('DOMContentLoaded', () => {
             load_js(src);
         });
         nodes.forEach(function(li, index) {
+            if (li.getAttribute('click') === 'true') {
+                li.removeEventListener('click');
+            }
+        });
+        nodesCollection.forEach(function(li, index) {
             if (li.getAttribute('click') === 'true') {
                 li.removeEventListener('click');
             }
@@ -894,12 +924,29 @@ function fillResponseData(responseData) {
                         var apiId = this.getAttribute('data-api-id');
                         console.log(this.getAttribute('data-api-id'));
                         // TODO: get all request data for this ID 
-                        ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                        ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'history']))
                         // End TODO
                     });
                 }
             });
             nodes.forEach(function(li, index) {
+                if (li.getAttribute('click') === 'true') {
+                    li.removeEventListener('click');
+                }
+            });
+            var nodesCollection = $('[data-collection-id]');
+            nodesCollection.forEach(function(li, index) {
+                if (li.getAttribute('click') !== 'true') {
+                    li.addEventListener('click', function() {
+                        var apiId = this.getAttribute('data-collection-id');
+                        console.log(this.getAttribute('data-collection-id'));
+                        // TODO: get all request data for this ID 
+                        ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'collection']))
+                        // End TODO
+                    });
+                }
+            });
+            nodesCollection.forEach(function(li, index) {
                 if (li.getAttribute('click') === 'true') {
                     li.removeEventListener('click');
                 }
@@ -933,12 +980,30 @@ function addClickEventListener() {
                 var apiId = this.getAttribute('data-api-id');
                 console.log(this.getAttribute('data-api-id'));
                 // TODO: get all request data for this ID 
-                ipcRenderer.send('find-data-via-menu-id', (event, apiId))
+                ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'history']))
                 // End TODO
             });
         }
     });
     nodes.forEach(function(li, index) {
+        if (li.getAttribute('click') === 'true') {
+            li.removeEventListener('click');
+        }
+    });
+
+    var nodesCollection = $('[data-collection-id]');
+    nodesCollection.forEach(function(li, index) {
+        if (li.getAttribute('click') !== 'true') {
+            li.addEventListener('click', function() {
+                var apiId = this.getAttribute('data-collection-id');
+                console.log(this.getAttribute('data-collection-id'));
+                // TODO: get all request data for this ID 
+                ipcRenderer.send('find-data-via-menu-id', (event, [apiId, 'collection']))
+                // End TODO
+            });
+        }
+    });
+    nodesCollection.forEach(function(li, index) {
         if (li.getAttribute('click') === 'true') {
             li.removeEventListener('click');
         }
