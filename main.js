@@ -60,12 +60,45 @@ console.log("User Data path" + app.getPath('userData'));
 */
 const store = new Store();
 
-global.share = { ipcMain, store};
+global.share = { ipcMain, store };
 
-if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)){
-  store.set('api-history-menu.history',[]);
-  store.set('main-screen.list-tab', []);
-} 
+if (!fs.existsSync(`${app.getPath('userData')}\\config.json`)) {
+  store.set('api-history-menu.history', []);
+  collectionSampleObject = {
+    "date": 'User Management',
+    "isOpen": true,
+    "apiEndPoint": [
+      {
+        "id": "2020081721511118",
+        "timeRequest": "2020-08-17 21:51:11:19",
+        "url": "http://jsonplaceholder.typicode.com/comments",
+        "method": "get",
+        "headers": {},
+        "authenticate": {
+          "type": "none",
+          "isAuthen": false,
+          "token": ""
+        },
+        "body": {}
+      },
+      {
+        "id": "2020081721494860",
+        "timeRequest": "2020-08-17 21:49:48:60",
+        "url": "http://api.learnvoca.hungthinhit.com/user",
+        "method": "get",
+        "headers": {},
+        "authenticate": {
+          "type": "Bearer",
+          "isAuthen": true,
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk1NDc5ODc0fQ._n-hgeyFkqA9X9IUlxWYNNC581jMs-XePLcKyk1icdo"
+        },
+        "body": {}
+      }
+    ]
+  }
+  store.set('api-history-menu.collection', [collectionSampleObject]);
+  // store.set('main-screen.list-tab', []);
+}
 
 /*
  * LOGIC Files

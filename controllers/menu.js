@@ -22,6 +22,24 @@ async function getHistoryApiMenu() {
 }
 
 /*
+|-----------------------------------------------
+| Get collection api menu from local store
+|-----------------------------------------------
+|
+| Get all object collection menu from local store
+| and return value.
+| 
+|
+|
+*/
+
+async function getCollectionApiMenu(){
+    const collectionMenu = await store.get('api-history-menu.collection')
+    return collectionMenu
+
+}
+
+/*
  * LISTENING ALL REQUEST FROM IPC RENDERER
  */
 
@@ -40,6 +58,23 @@ async function getHistoryApiMenu() {
 ipcMain.on('get-history-api-menu', async (event) => {
     const hisApiMenu = await getHistoryApiMenu()
     event.returnValue = await hisApiMenu
+});
+
+/*
+|-----------------------------------------------
+| Get collection api menu
+|-----------------------------------------------
+|
+| Call to getCollectionMenu() function and
+| return value through event.returnValue
+| prototype from ipcMain
+|
+|
+*/
+
+ipcMain.on('get-collection-api-menu', async (event) => {
+    const collectionMenu = await getCollectionApiMenu()
+    event.returnValue = await collectionMenu
 });
 
 /*
